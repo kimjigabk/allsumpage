@@ -1,9 +1,17 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+
+import GoogleAuth from "./GoogleAuth";
 
 const Header = () => {
   return (
-    <div>
-      <h1> I am a header </h1>
+    <div className="ui secondary pointing menu">
+      <Link to="/" className="item">
+        Allsum
+      </Link>
+      <div className="right menu">
+        <GoogleAuth />
+      </div>
     </div>
   );
 };

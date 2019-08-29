@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const SongList = () => {
   return (
     <div>
       <div>
-        <h1> SongLists Title </h1>
-        <h2> Description </h2>
-        <h3>Youtube Video Player</h3>
+        <Link to="/songs/1" className= "header">Song one</Link>
+        <Link to="/songs/2" className= "header">Song Two</Link>
       </div>
     </div>
   );
