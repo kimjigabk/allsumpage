@@ -5,14 +5,16 @@
       "description": "여러가지음악이 나옴",
       "id": 1,
       "youtubeUrl": "https://www.youtube.com/watch?v=uWF9B4yh3ZM",
-      "authorId": "103336108693548827446"
+      "authorId": "103336108693548827446",
+      "artist": "ㅆㅂ"
     },
     {
       "title": "라앤타",
       "description": "대양",
       "id": 2,
       "youtubeUrl": "https://www.youtube.com/watch?v=eLTdTkicioQ",
-      "authorId": "103336108693548827446"
+      "authorId": "103336108693548827446",
+      "artist": "라앤타"
     },
     {
       "youtubeUrl": "https://www.youtube.com/watch?v=Sbx7lRsfmnE",

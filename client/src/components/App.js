@@ -6,6 +6,7 @@ import SongList from "./songs/SongList";
 import SongCreate from "./songs/SongCreate";
 import SongEdit from "./songs/SongEdit";
 import SongDetail from "./songs/SongDetail";
+import SongDelete from "./songs/SongDelete";
 import history from "../history";
 
 class App extends React.Component {
@@ -19,6 +20,7 @@ class App extends React.Component {
               <Route path="/" exact component={SongList} />
               <Route path="/songs/new" exact component={SongCreate} />
               <Route path="/songs/edit/:id" exact component={SongEdit} />
+              <Route path="/songs/delete/:id" exact component={SongDelete} />
               <Route path="/songs/:id" exact component={SongDetail} />
             </Switch>
           </div>

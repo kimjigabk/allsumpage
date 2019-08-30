@@ -22,12 +22,14 @@ class SongList extends React.Component {
       );
     });
   }
-
+  // admin gets to add and edit items
+  // other users can only view the item
+  // they can save an item to favorites in songdetail component
   renderAdmin(song) {
     if (this.props.currentUserId === keys.adminId) {
       return (
         <div className="right floated content">
-          <Link to={`/songs/edit/${song.id}`} className="ui button primary">
+          <Link to={`/songs/edit/${song.id}`} className="ui button">
             EDIT
           </Link>
           <Link to={`/songs/delete/${song.id}`} className="ui button">
@@ -37,25 +39,26 @@ class SongList extends React.Component {
       );
     }
   }
-  // admin gets to add and edit items
-  // other users can only view the item
-  // they can save an item to favorites in songdetail component
 
+  renderCreate() {
+    if (this.props.currentUserId === keys.adminId) {
+      return (
+        <div style={{ textAlign: "right" }}>
+          <Link to="/songs/new" className="ui button primary">
+            Create Entry
+          </Link>
+        </div>
+      );
+    }
+  }
   render() {
-    console.log(
-      this.props.songs[0] === undefined ? "hi" : this.props.songs[0].title
-    );
+    // console.log(
+    //   this.props.songs[0] === undefined ? "hi" : this.props.songs[0].title
+    // );
     return (
       <div>
         <div className="ui celled list">{this.renderList()}</div>
-        <div>
-          <Link to="/songs/1" className="header">
-            Song one
-          </Link>
-          <Link to="/songs/2" className="header">
-            Song Two
-          </Link>
-        </div>
+        {this.renderCreate()}
       </div>
     );
   }

@@ -33,6 +33,7 @@ export const fetchSongs = () => async dispatch => {
 };
 export const fetchSong = id => async dispatch => {
   const response = await songs.get(`/songs/${id}`);
+  console.log(response.data);
   dispatch({
     type: FETCH_SONG,
     payload: response.data
