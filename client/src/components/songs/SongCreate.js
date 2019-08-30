@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-const SongCreate = () => {
-    return(
-        <div>
-            <h1>Title</h1>
-            <textarea>Title</textarea>
-            <h1>Description</h1>
-            <textarea>Description</textarea>
-            <h1>YoutubeUrl</h1>
-            <textarea>YoutubeUrl</textarea>
-        </div>
-    )
+import { createSong } from "../../actions";
+import SongForm from "./SongForm";
+
+class SongCreate extends Component {
+  onSubmit = formValues => {
+    this.props.createSong(formValues);
+  };
+  render() {
+    console.log(this.props);
+    return (
+      <div id="SSIBALNYHUN" style={{ margin: "0 5rem" }}>
+        <h2>Create a Entry</h2>
+        <SongForm onSubmit={this.onSubmit} />
+      </div>
+    );
+  }
 }
 
-export default SongCreate;
+export default connect(
+  null,
+  { createSong }
+)(SongCreate);

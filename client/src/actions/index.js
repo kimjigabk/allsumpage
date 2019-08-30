@@ -16,8 +16,8 @@ export const createSong = formValues => async (dispatch, getState) => {
   // create History object on a separate file instead of "BrowserRouter's one"
   // so we can access to the
   // to acheive, make another router instead of BrowserRouter.
-  const { userId } = getState().auth;
-  const response = await songs.post("/songs", { ...formValues, userId });
+  const authorId = getState().auth.userId;
+  const response = await songs.post("/songs", { ...formValues, authorId });
   dispatch({
     type: CREATE_SONG,
     payload: response.data
