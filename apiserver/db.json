@@ -5,30 +5,28 @@
       "description": "여러가지음악이 나옴",
       "id": 1,
       "youtubeUrl": "https://www.youtube.com/watch?v=uWF9B4yh3ZM",
-      "authorId": "1234"
+      "authorId": "103336108693548827446"
     },
     {
       "title": "라앤타",
       "description": "대양",
       "id": 2,
-      "userId": "103336108693548827446",
       "youtubeUrl": "https://www.youtube.com/watch?v=eLTdTkicioQ",
-      "authorId": "1234"
+      "authorId": "103336108693548827446"
     },
     {
-      "title": "abc",
-      "description": "def",
-      "youtubeUrl": "123",
-      "imageUrl": "asdf",
-      "authorId": null,
+      "youtubeUrl": "https://www.youtube.com/watch?v=Sbx7lRsfmnE",
+      "title": "나의 하루 - 알섬",
+      "description": "알섬",
+      "authorId": "105584576938037506819",
       "id": 3
     },
     {
-      "title": "abcsadadsad",
-      "description": "defdsad",
-      "youtubeUrl": "123dsa",
-      "imageUrl": "asdfdsadas",
-      "authorId": null,
+      "title": "나의하루",
+      "description": "알섬의몇집이더라",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Sbx7lRsfmnE",
+      "artist": "알섬",
+      "authorId": "105584576938037506819",
       "id": 4
     }
   ]

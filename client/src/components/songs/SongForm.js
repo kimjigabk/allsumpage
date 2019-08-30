@@ -47,6 +47,11 @@ class SongForm extends React.Component {
             label="Enter Title"
           />
           <Field
+            name="artist"
+            component={this.renderInput}
+            label="Enter Artist"
+          />
+          <Field
             name="description"
             component={this.renderInput}
             label="Enter Description"
@@ -71,6 +76,9 @@ const validate = formValues => {
   const errors = {};
   if (!formValues.title) {
     errors.title = "You must enter a title";
+  }
+  if (!formValues.artist) {
+    errors.artist = "You must enter a artist";
   }
   if (!formValues.description) {
     errors.description = "You must enter a description";
