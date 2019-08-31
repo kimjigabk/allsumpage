@@ -1,7 +1,9 @@
-export const SIGN_IN = 'SIGN_IN';
-export const SIGN_OUT = 'SIGN_OUT';
-export const CREATE_SONG = 'CREATE_SONG'; // POST one
-export const FETCH_SONGS = 'FETCH_SONGS'; // GET all
-export const FETCH_SONG = 'FETCH_SONG'; //GET one
-export const DELETE_SONG = 'DELETE_SONG'; // delete one
-export const EDIT_SONG = 'EDIT_SONG'; // 
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_OUT = "SIGN_OUT";
+export const CREATE_SONG = "CREATE_SONG"; // POST one
+export const FETCH_SONGS = "FETCH_SONGS"; // GET all
+export const FETCH_SONG = "FETCH_SONG"; //GET one
+export const DELETE_SONG = "DELETE_SONG"; // delete one
+export const EDIT_SONG = "EDIT_SONG"; //
+export const SHOW_VIDEO = "SHOW_VIDEO"; //
+export const CLOSE_VIDEO = "CLOSE_VIDEO";

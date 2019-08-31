@@ -1,15 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSongs } from "../../actions";
+import { fetchSongs, showVideo, closeVideo } from "../../actions";
 import keys from "../keys";
 import SongVideo from "./SongVideo";
 
 class SongList extends React.Component {
-  state = {
-    isShow: false,
-    songUrl: ""
-  };
   componentDidMount() {
     this.props.fetchSongs();
   }
@@ -26,10 +22,10 @@ class SongList extends React.Component {
           <div className="content">
             <div className="header">{song.title}</div>
             <div className="meta">{song.artist}</div>
-            <div className="description">{song.description}</div>
+            <div className="description">{song.description.slice(0,15)}</div>
             <br></br>
             <button
-              onClick={() => this.renderVideo(song.youtubeUrl)}
+              onClick={() => this.props.showVideo(song.youtubeUrl)}
               className="ui labeled icon button"
             >
               <i className="play circle outline icon"></i>
@@ -41,12 +37,26 @@ class SongList extends React.Component {
       );
     });
   }
-  renderVideo(songUrl) {
-    this.setState((state, props) => ({ isShow: true, songUrl }));
+  renderVideo() {
+    if (this.props.video.isShow) {
+      return (
+        <div
+          className="ui stackable"
+          style={{ margin: "auto 0" }}
+        >
+          <div className="centered column">
+            <div className="ui card">
+              <SongVideo url={this.props.video.youtubeUrl} />
+            </div>
+          </div>
+          <div className=" centered column">
+            <div className="ui card">안녕하셈</div>
+          </div>
+        </div>
+      );
+    } else return;
   }
-  // admin gets to add and edit items
-  // other users can only view the item
-  // they can save an item to favorites in songdetail component
+
   renderAdmin(song) {
     if (this.props.currentUserId === keys.adminId) {
       return (
@@ -85,7 +95,7 @@ class SongList extends React.Component {
   render() {
     return (
       <div className="ui stackable">
-        {this.state.isShow && <SongVideo url={this.state.songUrl} />}
+        {this.renderVideo()}
         <div className="row">
           <div
             className="ui five doubling centered cards"
@@ -107,10 +117,11 @@ class SongList extends React.Component {
 const mapStateToProps = state => {
   return {
     currentUserId: state.auth.userId,
-    songs: Object.values(state.songs)
+    songs: Object.values(state.songs),
+    video: state.video
   };
 };
 export default connect(
   mapStateToProps,
-  { fetchSongs }
+  { fetchSongs, showVideo, closeVideo }
 )(SongList);

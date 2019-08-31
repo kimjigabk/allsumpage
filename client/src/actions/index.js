@@ -5,7 +5,9 @@ import {
   DELETE_SONG,
   FETCH_SONG,
   FETCH_SONGS,
-  EDIT_SONG
+  EDIT_SONG,
+  SHOW_VIDEO,
+  CLOSE_VIDEO
 } from "./types";
 import songs from "../apis/songs";
 import history from "../history";
@@ -67,5 +69,17 @@ export const signIn = userId => {
 export const signOut = () => {
   return {
     type: SIGN_OUT
+  };
+};
+
+export const showVideo = youtubeUrl => {
+  return {
+    type: SHOW_VIDEO,
+    payload: youtubeUrl
+  };
+};
+export const closeVideo = () => {
+  return {
+    type: CLOSE_VIDEO
   };
 };
