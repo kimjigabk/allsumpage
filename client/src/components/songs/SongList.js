@@ -3,24 +3,46 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSongs } from "../../actions";
 import keys from "../keys";
+import SongVideo from "./SongVideo";
 
 class SongList extends React.Component {
+  state = {
+    isShow: false,
+    songUrl: ""
+  };
   componentDidMount() {
     this.props.fetchSongs();
   }
   renderList() {
     return this.props.songs.map(song => {
       return (
-        <div className="item" key={song.id}>
-          {this.renderAdmin(song)}
-          <div className="content">
-            {song.title}
-            <div className="description">{song.description}</div>
-            <div>{song.youtubeUrl}</div>
+        <div className="card" key={song.id}>
+          <div className="image">
+            <img
+              alt="abc"
+              src="https://cdnimg.melon.co.kr/cm/album/images/026/81/021/2681021_1000.jpg/melon/quality/80/optimize"
+            ></img>
           </div>
+          <div className="content">
+            <div className="header">{song.title}</div>
+            <div className="meta">{song.artist}</div>
+            <div className="description">{song.description}</div>
+            <br></br>
+            <button
+              onClick={() => this.renderVideo(song.youtubeUrl)}
+              className="ui labeled icon button"
+            >
+              <i className="play circle outline icon"></i>
+              Play
+            </button>
+          </div>
+          {this.renderAdmin(song)}
         </div>
       );
     });
+  }
+  renderVideo(songUrl) {
+    this.setState((state, props) => ({ isShow: true, songUrl }));
   }
   // admin gets to add and edit items
   // other users can only view the item
@@ -28,13 +50,21 @@ class SongList extends React.Component {
   renderAdmin(song) {
     if (this.props.currentUserId === keys.adminId) {
       return (
-        <div className="right floated content">
-          <Link to={`/songs/edit/${song.id}`} className="ui button">
-            EDIT
-          </Link>
-          <Link to={`/songs/delete/${song.id}`} className="ui button">
-            DELETE
-          </Link>
+        <div className="extra content">
+          <div className="">
+            <Link
+              to={`/songs/edit/${song.id}`}
+              className="compact ui icon button"
+            >
+              <i className="edit icon"></i>
+            </Link>
+            <Link
+              to={`/songs/delete/${song.id}`}
+              className="compact ui icon button"
+            >
+              <i className="trash alternate outline icon"></i>
+            </Link>
+          </div>
         </div>
       );
     }
@@ -51,14 +81,25 @@ class SongList extends React.Component {
       );
     }
   }
+
   render() {
-    // console.log(
-    //   this.props.songs[0] === undefined ? "hi" : this.props.songs[0].title
-    // );
     return (
-      <div>
-        <div className="ui celled list">{this.renderList()}</div>
-        {this.renderCreate()}
+      <div className="ui stackable">
+        {this.state.isShow && <SongVideo url={this.state.songUrl} />}
+        <div className="row">
+          <div
+            className="ui five doubling centered cards"
+            style={{
+              margin: "2rem auto",
+              overflow: "scroll",
+              overflowX: "hidden",
+              height: "590px"
+            }}
+          >
+            {this.renderList()}
+          </div>
+        </div>
+        <div className="row">{this.renderCreate()}</div>
       </div>
     );
   }
