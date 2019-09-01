@@ -7,7 +7,7 @@ import VideoSection from "../video/VideoSection";
 
 class SongList extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
-    if(nextProps.currentUserId !== this.props.currentUserId){
+    if (nextProps.currentUserId !== this.props.currentUserId) {
       return true;
     }
     if (this.props.songs.length === nextProps.songs.length) {
@@ -22,6 +22,9 @@ class SongList extends React.Component {
     this.props.fetchSongs();
   }
   renderList() {
+    if (!this.props.songs) {
+      return "씨발 로딩중임";
+    }
     return this.props.songs.map(song => {
       return (
         <div className="card" key={song.id}>
@@ -116,6 +119,19 @@ class SongList extends React.Component {
   }
 }
 const mapStateToProps = state => {
+  // 원래 data: array of objects, object =   {
+  //   "title": "라앤타 기와라이브",
+  //   "description": "여러가지음악이 나옴",
+  //   "id": "ABASFSAFSQRWQEQWE",
+  //   "youtubeUrl": "https://www.youtube.com/watch?v=uWF9B4yh3ZM",
+  //   "authorId": "103336108693548827446",
+  //   "artist": "ㅎㅇ"
+  // },
+  // console.log(state.songs); 이건 object. key = id from above,, value = the whole object above
+  // state.songs[KEY] 를하면 하나의 whole object를 리턴받음 .{title: .. description: ..}
+  // console.log(Object.values(state.songs)); 이건 array (map을 쓰기위해.)
+  // Object.values(state.songs)[#] 여긴 #밖에 못들어간다  array라서
+
   return {
     currentUserId: state.auth.userId,
     songs: Object.values(state.songs),

@@ -8,13 +8,14 @@ import reducers from "./reducers";
 
 import * as serviceWorker from "./serviceWorker";
 
+import axios from "axios";
+window.axios = axios;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducers,
   composeEnhancers(applyMiddleware(reduxThunk))
 );
-
 
 ReactDOM.render(
   <Provider store={store}>
