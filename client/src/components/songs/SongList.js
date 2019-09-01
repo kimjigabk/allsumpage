@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSongs, showVideo, closeVideo } from "../../actions";
-import keys from "../keys";
+import keys from "../../config/keys";
 import VideoSection from "../video/VideoSection";
 
 class SongList extends React.Component {

@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSong, editSong } from "../../actions";
 import SongForm from "./SongForm";
-import keys from "../keys";
+import keys from "../../config/keys";
 
 class SongEdit extends React.Component {
   componentDidMount() {

@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { signIn, signOut } from "../actions";
-import keys from "./keys";
+import keys from "../config/keys";
 
 class GoogleAuth extends React.Component {
   componentDidMount() {
-    
     window.gapi.load("client:auth2", () => {
       window.gapi.client
         .init({
@@ -17,7 +16,7 @@ class GoogleAuth extends React.Component {
           this.auth = window.gapi.auth2.getAuthInstance();
           //바로밑에있는 function 불러서 call action
           this.onAuthChange(this.auth.isSignedIn.get());
-          // call action based on onAuthChange 
+          // call action based on onAuthChange
           this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
@@ -64,7 +63,7 @@ class GoogleAuth extends React.Component {
 }
 const mapStateToProps = state => {
   // console.log(state);
-  // return {};  
+  // return {};
   return { isSigned: state.auth.isSignedIn };
 };
 //state = from reducer, state.auth = authreducer
