@@ -9,9 +9,8 @@ class SongCreate extends Component {
     this.props.createSong(formValues);
   };
   render() {
-    console.log(this.props);
     return (
-      <div id="SSIBALNYHUN" style={{ margin: "0 5rem" }}>
+      <div style={{ margin: "0 5rem" }}>
         <h2>Create a Entry</h2>
         <SongForm onSubmit={this.onSubmit} />
       </div>

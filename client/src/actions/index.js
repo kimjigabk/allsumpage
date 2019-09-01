@@ -24,7 +24,7 @@ export const createSong = formValues => async (dispatch, getState) => {
     type: CREATE_SONG,
     payload: response.data
   });
-  history.push("/"); // this makes user redirect to '/' after action is called.
+  history.goBack();
 };
 export const fetchSongs = () => async dispatch => {
   const response = await songs.get("/songs");
@@ -35,7 +35,6 @@ export const fetchSongs = () => async dispatch => {
 };
 export const fetchSong = id => async dispatch => {
   const response = await songs.get(`/songs/${id}`);
-  console.log(response.data);
   dispatch({
     type: FETCH_SONG,
     payload: response.data
@@ -47,7 +46,7 @@ export const editSong = (id, formValues) => async dispatch => {
     type: EDIT_SONG,
     payload: response.data
   });
-  history.push("/");
+  history.goBack();
 };
 export const deleteSong = (id, formValues) => async dispatch => {
   // const response = await songs.delete(`/songs/${id}`, formValues);
@@ -56,7 +55,7 @@ export const deleteSong = (id, formValues) => async dispatch => {
     type: DELETE_SONG,
     payload: id
   });
-  history.push("/");
+  history.goBack();
 };
 
 export const signIn = userId => {

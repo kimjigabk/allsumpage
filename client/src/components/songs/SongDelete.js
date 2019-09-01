@@ -3,7 +3,8 @@ import Modal from "../Modal";
 import history from "../../history";
 
 import { connect } from "react-redux";
-import { fetchSong, deleteSong } from "../../actions";
+import { fetchSong, deleteSong, closeVideo } from "../../actions";
+
 
 class SongDelete extends React.Component {
   componentDidMount() {
@@ -15,7 +16,10 @@ class SongDelete extends React.Component {
       //Fragment 이유: 이거 안하면 버튼이 밑에 달라붙음
       <React.Fragment>
         <button
-          onClick={() => this.props.deleteSong(id)}
+          onClick={() => {
+            this.props.closeVideo();
+            this.props.deleteSong(id);
+          }}
           className="ui button negative"
         >
           Delete
@@ -55,6 +59,7 @@ export default connect(
   mapStateToProps,
   {
     fetchSong,
-    deleteSong
+    deleteSong,
+    closeVideo
   }
 )(SongDelete);

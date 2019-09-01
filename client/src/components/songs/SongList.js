@@ -7,6 +7,9 @@ import VideoSection from "../video/VideoSection";
 
 class SongList extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    if(nextProps.currentUserId !== this.props.currentUserId){
+      return true;
+    }
     if (this.props.songs.length === nextProps.songs.length) {
       if (this.props.video.songId !== nextProps.video.songId) {
         return true;

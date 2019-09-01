@@ -72,20 +72,45 @@ class SongForm extends React.Component {
     );
   }
 }
+function matchYoutubeUrl(url = "") {
+  var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+  var matches = url.match(p);
+  if (matches) {
+    return matches[1];
+  }
+  return false;
+}
+
+function matchImgUrl(url = "") {
+  var p = /^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/;
+  var matches = url.match(p);
+  if (matches) {
+    return true;
+  }
+  return false;
+}
+
 const validate = formValues => {
   const errors = {};
   if (!formValues.title) {
     errors.title = "You must enter a title";
   }
+
   if (!formValues.artist) {
     errors.artist = "You must enter a artist";
   }
   if (!formValues.description) {
     errors.description = "You must enter a description";
   }
-  if (!formValues.youtubeUrl) {
-    errors.youtubeUrl = "You must enter a Youtube Url";
+  if (!matchYoutubeUrl(formValues.youtubeUrl)) {
+    errors.youtubeUrl = "You must enter a valid Youtube URL";
   }
+  if(formValues.imageUrl){
+    if (formValues.imageUrl.length > 0 && !matchImgUrl(formValues.imageUrl)) {
+      errors.imageUrl = "You must enter a valid image URL";
+    }  
+  }
+  
   return errors;
 };
 
