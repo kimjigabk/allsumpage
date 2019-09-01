@@ -6,6 +6,7 @@ const songSchema = new Schema({
   artist: String,
   description: String,
   youtubeUrl: String,
+  imageUrl: String,
   authorId: String,
   id: Number
 });

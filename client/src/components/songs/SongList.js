@@ -29,15 +29,12 @@ class SongList extends React.Component {
       return (
         <div className="card" key={song.id}>
           <div className="image">
-            <img
-              alt="abc"
-              src="https://cdnimg.melon.co.kr/cm/album/images/026/81/021/2681021_1000.jpg/melon/quality/80/optimize"
-            ></img>
+            <img alt="albumart" src={song.imageUrl}></img>
           </div>
           <div className="content">
             <div className="header">{song.title}</div>
             <div className="meta">{song.artist}</div>
-            <div className="description">{song.description.slice(0, 15)}</div>
+            <div className="description">{song.description.slice(0, 30)}</div>
             <br></br>
             <button
               onClick={() => this.props.showVideo(song.id)}

@@ -20,13 +20,20 @@ module.exports = app => {
 
   app.post("/api/songs", async (req, res) => {
     const { title, artist, description, youtubeUrl, authorId } = req.body;
-
+    let imageUrl;
+    if (!req.body.imageUrl) {
+      imageUrl =
+        "https://cdnimg.melon.co.kr/cm/album/images/026/81/021/2681021_1000.jpg/melon/quality/80/optimize";
+    } else {
+      imageUrl = req.body.imageUrl;
+    }
     const song = new Song({
       title,
       artist,
       description,
       youtubeUrl,
       authorId,
+      imageUrl,
       id: Date.now()
     });
     try {
