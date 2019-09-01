@@ -1,5 +1,5 @@
-require("./myfile");
+const a = require("./myfile");
 module.exports = {
-  clientId,
-  adminId
+  clientId: a.clientId,
+  adminId: a.adminId
 };
