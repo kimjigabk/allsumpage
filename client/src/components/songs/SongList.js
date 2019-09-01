@@ -34,7 +34,7 @@ class SongList extends React.Component {
           <div className="content">
             <div className="header">{song.title}</div>
             <div className="meta">{song.artist}</div>
-            <div className="description">{song.description.slice(0, 30)}</div>
+            <div className="description">{song.description.slice(0, 40)}</div>
             <br></br>
             <button
               onClick={() => this.props.showVideo(song.id)}
