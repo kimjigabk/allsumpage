@@ -5,6 +5,7 @@ import keys from "../config/keys";
 
 class GoogleAuth extends React.Component {
   componentDidMount() {
+    console.log(keys);
     window.gapi.load("client:auth2", () => {
       window.gapi.client
         .init({
