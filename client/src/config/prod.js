@@ -1,5 +1,5 @@
-const a = require("./myfile");
 module.exports = {
-  clientId: a.clientId,
-  adminId: a.adminId
+  clientId:
+    "282186030357-p73k9e128pag6nrr84vsrinlb121srqd.apps.googleusercontent.com",
+  adminId: "105584576938037506819"
 };
