@@ -1,5 +1,6 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
+import history from "../history";
 
 import Header from "./Header";
 import SongList from "./songs/SongList";
@@ -7,7 +8,7 @@ import SongCreate from "./songs/SongCreate";
 import SongEdit from "./songs/SongEdit";
 import SongDetail from "./songs/SongDetail";
 import SongDelete from "./songs/SongDelete";
-import history from "../history";
+import MainPage from "./MainPage";
 
 class App extends React.Component {
   render() {
@@ -17,7 +18,8 @@ class App extends React.Component {
           <div>
             <Header />
             <Switch>
-              <Route path="/" exact component={SongList} />
+              <Route path="/" exact component={MainPage} />
+              <Route path="/songs" exact component={SongList} />
               <Route path="/songs/new" exact component={SongCreate} />
               <Route path="/songs/edit/:id" exact component={SongEdit} />
               <Route path="/songs/delete/:id" exact component={SongDelete} />

@@ -72,10 +72,10 @@ export const signOut = () => {
   };
 };
 
-export const showVideo = youtubeUrl => {
+export const showVideo = songId => {
   return {
     type: SHOW_VIDEO,
-    payload: youtubeUrl
+    payload: songId
   };
 };
 export const closeVideo = () => {

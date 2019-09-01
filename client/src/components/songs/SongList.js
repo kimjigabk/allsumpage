@@ -3,9 +3,18 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSongs, showVideo, closeVideo } from "../../actions";
 import keys from "../keys";
-import SongVideo from "./SongVideo";
+import VideoSection from "../video/VideoSection";
 
 class SongList extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.songs.length === nextProps.songs.length) {
+      if (this.props.video.songId !== nextProps.video.songId) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
   componentDidMount() {
     this.props.fetchSongs();
   }
@@ -22,42 +31,23 @@ class SongList extends React.Component {
           <div className="content">
             <div className="header">{song.title}</div>
             <div className="meta">{song.artist}</div>
-            <div className="description">{song.description.slice(0,15)}</div>
+            <div className="description">{song.description.slice(0, 15)}</div>
             <br></br>
             <button
-              onClick={() => this.props.showVideo(song.youtubeUrl)}
+              onClick={() => this.props.showVideo(song.id)}
               className="ui labeled icon button"
             >
               <i className="play circle outline icon"></i>
               Play
             </button>
           </div>
-          {this.renderAdmin(song)}
+          {this.renderAdminEditDelete(song)}
         </div>
       );
     });
   }
-  renderVideo() {
-    if (this.props.video.isShow) {
-      return (
-        <div
-          className="ui stackable"
-          style={{ margin: "auto 0" }}
-        >
-          <div className="centered column">
-            <div className="ui card">
-              <SongVideo url={this.props.video.youtubeUrl} />
-            </div>
-          </div>
-          <div className=" centered column">
-            <div className="ui card">안녕하셈</div>
-          </div>
-        </div>
-      );
-    } else return;
-  }
 
-  renderAdmin(song) {
+  renderAdminEditDelete(song) {
     if (this.props.currentUserId === keys.adminId) {
       return (
         <div className="extra content">
@@ -80,7 +70,7 @@ class SongList extends React.Component {
     }
   }
 
-  renderCreate() {
+  renderAdminCreate() {
     if (this.props.currentUserId === keys.adminId) {
       return (
         <div style={{ textAlign: "right" }}>
@@ -94,22 +84,30 @@ class SongList extends React.Component {
 
   render() {
     return (
-      <div className="ui stackable">
-        {this.renderVideo()}
-        <div className="row">
-          <div
-            className="ui five doubling centered cards"
-            style={{
-              margin: "2rem auto",
-              overflow: "scroll",
-              overflowX: "hidden",
-              height: "590px"
-            }}
-          >
-            {this.renderList()}
+      <div>
+        <VideoSection
+          video={this.props.video}
+          closeVideo={this.props.closeVideo}
+        />
+
+        <div className="ui stackable">
+          <div className="row">
+            <div
+              className="ui five doubling centered cards"
+              style={{
+                margin: "2rem auto",
+                overflow: "scroll",
+                overflowX: "hidden",
+                height: "590px"
+              }}
+            >
+              {this.renderList()}
+            </div>
+          </div>
+          <div className="row" style={{ marginBottom: "10px" }}>
+            {this.renderAdminCreate()}
           </div>
         </div>
-        <div className="row">{this.renderCreate()}</div>
       </div>
     );
   }

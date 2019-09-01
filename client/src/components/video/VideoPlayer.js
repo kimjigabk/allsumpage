@@ -1,6 +1,6 @@
 import React from "react";
 
-const SongVideo = ({ url }) => {
+const VideoPlayer = ({ url }) => {
   const videoId = url.slice(32);
   const videoSrc = `https://www.youtube.com/embed/${videoId}`;
   return (
@@ -15,4 +15,4 @@ const SongVideo = ({ url }) => {
   );
 };
 
-export default SongVideo;
+export default VideoPlayer;
