@@ -1,4 +1,4 @@
-require("../../../config/prod");
+require("./myfile");
 module.exports = {
   clientId,
   adminId
