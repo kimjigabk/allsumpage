@@ -1,4 +1,5 @@
-module.exports = { 
-  clientId: process.env.GOOGLE_CLIENT_ID,
-  adminId: process.env.ADMIN_ID
+require("../../../config/prod");
+module.exports = {
+  clientId,
+  adminId
 };
