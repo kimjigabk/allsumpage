@@ -1,7 +1,7 @@
-// const path = require("path");
+const keys = require("../config/keys");
 const mongoose = require("mongoose");
-
 const Song = mongoose.model("songs");
+const requireLogin = require("../middlewares/requireLogin");
 
 module.exports = app => {
   app.get("/api/songs", (req, res) => {
@@ -18,7 +18,10 @@ module.exports = app => {
     });
   });
 
-  app.post("/api/songs", async (req, res) => {
+  app.post("/api/songs", requireLogin, async (req, res) => {
+    // if (req.body.authorId !== keys.adminId) {
+    //   return res.status(401).send({ error: "You must log in" });
+    // }
     const { title, artist, description, youtubeUrl, authorId } = req.body;
     let imageUrl;
     if (!req.body.imageUrl) {
@@ -32,8 +35,8 @@ module.exports = app => {
       artist,
       description,
       youtubeUrl,
-      authorId,
       imageUrl,
+      authorId,
       id: Date.now()
     });
     try {
@@ -44,22 +47,22 @@ module.exports = app => {
     }
   });
 
-  app.patch("/api/songs/:id", (req, res) => {
-    // console.log(req.body);
-    // console.log(req.params.id);
-    Song.findOneAndUpdate({ id: req.params.id }, req.body, function(
-      err,
-      response
-    ) {
-      if (err) {
-        res.status(422).send(err);
-      } else {
-        res.send(response);
+  app.patch("/api/songs/:id", requireLogin, (req, res) => {
+    const { title, artist, description, youtubeUrl, imageUrl } = req.body;
+    Song.findOneAndUpdate(
+      { id: req.params.id },
+      { title, artist, description, youtubeUrl, imageUrl },
+      function(err, response) {
+        if (err) {
+          res.status(422).send(err);
+        } else {
+          res.send(response);
+        }
       }
-    });
+    );
   });
 
-  app.delete("/api/songs/:id", (req, res) => {
+  app.delete("/api/songs/:id", requireLogin, (req, res) => {
     Song.findOneAndDelete({ id: req.params.id }, function(err, response) {
       if (err) {
         res.status(422).send(err);

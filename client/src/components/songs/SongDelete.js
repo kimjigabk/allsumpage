@@ -9,7 +9,7 @@ class SongDelete extends React.Component {
     const id = this.props.deletingSong.id;
     return (
       //Fragment 이유: 이거 안하면 버튼이 밑에 달라붙음
-      <React.Fragment> 
+      <React.Fragment>
         <button
           onClick={() => {
             this.props.closeVideo(); //안닫으면 비디오에서 에러남

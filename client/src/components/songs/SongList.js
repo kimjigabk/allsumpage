@@ -41,7 +41,7 @@ class SongList extends React.Component {
 
   renderList() {
     if (!this.props.songs) {
-      return "씨발 로딩중임";
+      return "ㅇㅇ";
     }
     return this.props.songs.map(song => {
       return (
@@ -58,14 +58,6 @@ class SongList extends React.Component {
             <div className="header">{song.title}</div>
             <div className="meta">{song.artist}</div>
             <div className="description">{song.description.slice(0, 40)}</div>
-            <br></br>
-            {/* <button
-              onClick={() => this.props.showVideo(song.id)}
-              className="ui labeled icon button"
-            >
-              <i className="play circle outline icon"></i>
-              Play
-            </button> */}
           </div>
           {this.renderAdminEditDelete(song)}
         </div>
@@ -78,11 +70,15 @@ class SongList extends React.Component {
         <div className="extra content">
           <div className="">
             <Link
+              onClick={e => {
+                e.stopPropagation();
+              }}
               to={`/songs/edit/${song.id}`}
               className="compact ui icon button"
             >
               <i className="edit icon"></i>
             </Link>
+
             <button
               onClick={e => {
                 e.stopPropagation();
@@ -141,7 +137,10 @@ class SongList extends React.Component {
               deletingSong={this.state.deletingSong}
             />
           )}
-          <div className="row" style={{ marginTop: "25px" }}>
+          <div
+            className="row"
+            style={{ marginTop: "25px", marginBottom: "10px" }}
+          >
             {this.renderAdminCreate()}
           </div>
         </div>

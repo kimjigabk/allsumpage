@@ -10,7 +10,7 @@ import {
   CLOSE_VIDEO
 } from "./types";
 // import axios from "../apis/songs";
-import axios from 'axios'
+import axios from "axios";
 import history from "../history";
 
 export const createSong = formValues => async (dispatch, getState) => {
@@ -20,7 +20,7 @@ export const createSong = formValues => async (dispatch, getState) => {
     type: CREATE_SONG,
     payload: response.data
   });
-  history.push('/songs');
+  history.push("/songs");
 };
 export const fetchSongs = () => async dispatch => {
   const response = await axios.get("/api/songs");
@@ -37,29 +37,34 @@ export const fetchSong = id => async dispatch => {
     payload: response.data
   });
 };
-export const editSong = (id, formValues) => async dispatch => {
-  const response = await axios.patch(`/api/songs/${id}`, formValues);
+export const editSong = (id, formValues) => async (dispatch, getState) => {
+  const authorId = getState().auth.userId;
+  const response = await axios.patch(`/api/songs/${id}`, {
+    ...formValues,
+    authorId
+  });
   dispatch({
     type: EDIT_SONG,
     payload: response.data
   });
-  history.push('/songs');
+  history.push("/songs");
 };
-export const deleteSong = (id, formValues) => async dispatch => {
-  // const response = await songs.delete(`/songs/${id}`, formValues);
-  await axios.delete(`/api/songs/${id}`, formValues);
+export const deleteSong = id => async (dispatch, getState) => {
+  const authorId = getState().auth.userId;
+  await axios.delete(`/api/songs/${id}`, { data: { authorId } });
   dispatch({
     type: DELETE_SONG,
     payload: id
   });
-  history.push('/songs');
+  history.push("/songs");
 };
 
-export const signIn = userId => {
-  return {
+export const signIn = userId => async dispatch => {
+  await axios.post("/api/user/", { userId });
+  dispatch({
     type: SIGN_IN,
     payload: userId
-  };
+  });
 };
 
 export const signOut = () => {

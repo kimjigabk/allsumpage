@@ -65,6 +65,8 @@ class GoogleAuth extends React.Component {
   }
 }
 const mapStateToProps = state => {
+  // console.log(state);
+  // return {};
   return { isSigned: state.auth.isSignedIn };
 };
 //state = from reducer, state.auth = authreducer
