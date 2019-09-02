@@ -1,4 +1,5 @@
 const express = require("express");
+const compression = require("compression");
 // const spdy = require("spdy");
 // const fs = require("fs");
 const mongoose = require("mongoose");
@@ -16,6 +17,9 @@ mongoose.connect(keys.mongoURI, {
 });
 
 const app = express();
+
+app.use(compression());
+app.use(bodyParser.json());
 
 if (process.env.NODE_ENV === "production") {
   // Enable reverse proxy support in Express. This causes the
@@ -37,8 +41,6 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
-app.use(bodyParser.json());
-
 app.get("/test", (req, res) => {
   console.log(req.secure);
 
