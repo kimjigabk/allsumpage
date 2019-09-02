@@ -26,7 +26,7 @@ module.exports = app => {
     let imageUrl;
     if (!req.body.imageUrl) {
       imageUrl =
-        "https://cdnimg.melon.co.kr/cm/album/images/026/81/021/2681021_1000.jpg/melon/quality/80/optimize";
+        "https://musicmeta-phinf.pstatic.net/album/000/466/466579.jpg?type=r360Fll&v=20141128120110";
     } else {
       imageUrl = req.body.imageUrl;
     }

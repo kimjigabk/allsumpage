@@ -1,6 +1,4 @@
 import React from "react";
-import "./SearchBox.css";
-
 const SearchBox = () => {
   return (
     <div className="row" style={{ margin: "1rem" }}>

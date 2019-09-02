@@ -2,6 +2,7 @@ node_modules
 
 /keys
 
+semantic.css
 dev.js
 
 .vscode
