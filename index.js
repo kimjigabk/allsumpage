@@ -7,7 +7,8 @@ const keys = require("./config/keys");
 require("./models/Song");
 
 mongoose.connect(keys.mongoURI, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false
 });
 
 const app = express();

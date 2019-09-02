@@ -20,7 +20,7 @@ export const createSong = formValues => async (dispatch, getState) => {
     type: CREATE_SONG,
     payload: response.data
   });
-  history.goBack();
+  history.push('/songs');
 };
 export const fetchSongs = () => async dispatch => {
   const response = await axios.get("/api/songs");
@@ -43,7 +43,7 @@ export const editSong = (id, formValues) => async dispatch => {
     type: EDIT_SONG,
     payload: response.data
   });
-  history.goBack();
+  history.push('/songs');
 };
 export const deleteSong = (id, formValues) => async dispatch => {
   // const response = await songs.delete(`/songs/${id}`, formValues);
@@ -52,7 +52,7 @@ export const deleteSong = (id, formValues) => async dispatch => {
     type: DELETE_SONG,
     payload: id
   });
-  history.goBack();
+  history.push('/songs');
 };
 
 export const signIn = userId => {

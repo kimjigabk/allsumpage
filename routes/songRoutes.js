@@ -6,7 +6,7 @@ const Song = mongoose.model("songs");
 module.exports = app => {
   app.get("/api/songs", (req, res) => {
     // res.sendFile(path.resolve(__dirname, "test.json"));
-    Song.find({}, function(err, songs) {
+    Song.find({}, "-_id -__v", function(err, songs) {
       res.send(songs);
     });
   });
@@ -42,6 +42,21 @@ module.exports = app => {
     } catch (err) {
       res.status(422).send(err);
     }
+  });
+
+  app.patch("/api/songs/:id", (req, res) => {
+    // console.log(req.body);
+    // console.log(req.params.id);
+    Song.findOneAndUpdate({ id: req.params.id }, req.body, function(
+      err,
+      response
+    ) {
+      if (err) {
+        res.status(422).send(err);
+      } else {
+        res.send(response);
+      }
+    });
   });
 
   app.delete("/api/songs/:id", (req, res) => {

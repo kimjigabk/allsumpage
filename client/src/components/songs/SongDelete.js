@@ -1,40 +1,36 @@
 import React from "react";
 import Modal from "../Modal";
-import history from "../../history";
 
 import { connect } from "react-redux";
-import { fetchSong, deleteSong, closeVideo } from "../../actions";
-
+import { deleteSong, closeVideo } from "../../actions";
 
 class SongDelete extends React.Component {
-  componentDidMount() {
-    this.props.fetchSong(this.props.match.params.id);
-  }
   deleteAction() {
-    const id = this.props.match.params.id;
+    const id = this.props.deletingSong.id;
     return (
       //Fragment 이유: 이거 안하면 버튼이 밑에 달라붙음
-      <React.Fragment>
+      <React.Fragment> 
         <button
           onClick={() => {
-            this.props.closeVideo();
+            this.props.closeVideo(); //안닫으면 비디오에서 에러남
             this.props.deleteSong(id);
+            this.props.hideDeleteModal();
           }}
           className="ui button negative"
         >
           Delete
         </button>
-        <button onClick={() => history.goBack()} className="ui button">
+        <button onClick={this.props.hideDeleteModal} className="ui button">
           Cancel
         </button>
       </React.Fragment>
     );
   }
   renderContent() {
-    if (!this.props.song) {
+    if (!this.props.deletingSong) {
       return "Are you sure you want to delete Song :";
     } else {
-      return `Are you sure you want to delete Song : ${this.props.song.title}`;
+      return `Are you sure you want to delete Song : ${this.props.deletingSong.title}`;
     }
   }
   render() {
@@ -45,20 +41,15 @@ class SongDelete extends React.Component {
           title="Delete Song"
           content={this.renderContent()}
           actions={this.deleteAction()}
-          onDismiss={() => history.goBack()}
+          onDismiss={this.props.hideDeleteModal}
         />
       </div>
     );
   }
 }
-const mapStateToProps = (state, ownProps) => {
-  //   console.log(state);
-  return { song: state.songs[ownProps.match.params.id] };
-};
 export default connect(
-  mapStateToProps,
+  null,
   {
-    fetchSong,
     deleteSong,
     closeVideo
   }

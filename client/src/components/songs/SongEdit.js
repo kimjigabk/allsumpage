@@ -10,8 +10,6 @@ class SongEdit extends React.Component {
     this.props.fetchSong(this.props.match.params.id);
   }
   onSubmit = formValues => {
-    console.log(formValues);
-
     this.props.editSong(this.props.match.params.id, formValues);
   };
   render() {
@@ -30,7 +28,8 @@ class SongEdit extends React.Component {
             "title",
             "artist",
             "description",
-            "youtubeUrl"
+            "youtubeUrl",
+            "imageUrl"
           )}
           onSubmit={this.onSubmit}
         />

@@ -4,10 +4,26 @@ import { connect } from "react-redux";
 import { fetchSongs, showVideo, closeVideo } from "../../actions";
 import keys from "../../config/keys";
 import VideoSection from "../video/VideoSection";
+import SongDelete from "./SongDelete";
 
 class SongList extends React.Component {
+  state = {
+    isModalActive: false,
+    deletingSong: null
+  };
+  showDeleteModal = song => {
+    this.setState({ isModalActive: true, deletingSong: song });
+  };
+
+  hideDeleteModal = () => {
+    this.setState({ isModalActive: false, deletingSong: null });
+  };
+
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.currentUserId !== this.props.currentUserId) {
+      return true;
+    }
+    if (this.state !== nextState) {
       return true;
     }
     if (this.props.songs.length === nextProps.songs.length) {
@@ -21,13 +37,18 @@ class SongList extends React.Component {
   componentDidMount() {
     this.props.fetchSongs();
   }
+
   renderList() {
     if (!this.props.songs) {
       return "씨발 로딩중임";
     }
     return this.props.songs.map(song => {
       return (
-        <div className="card" key={song.id}>
+        <div
+          className="card"
+          key={song.id}
+          onClick={() => this.props.showVideo(song.id)}
+        >
           <div className="image">
             <img alt="albumart" src={song.imageUrl}></img>
           </div>
@@ -36,20 +57,19 @@ class SongList extends React.Component {
             <div className="meta">{song.artist}</div>
             <div className="description">{song.description.slice(0, 40)}</div>
             <br></br>
-            <button
+            {/* <button
               onClick={() => this.props.showVideo(song.id)}
               className="ui labeled icon button"
             >
               <i className="play circle outline icon"></i>
               Play
-            </button>
+            </button> */}
           </div>
           {this.renderAdminEditDelete(song)}
         </div>
       );
     });
   }
-
   renderAdminEditDelete(song) {
     if (this.props.currentUserId === keys.adminId) {
       return (
@@ -61,18 +81,17 @@ class SongList extends React.Component {
             >
               <i className="edit icon"></i>
             </Link>
-            <Link
-              to={`/songs/delete/${song.id}`}
+            <button
+              onClick={() => this.showDeleteModal(song)}
               className="compact ui icon button"
             >
               <i className="trash alternate outline icon"></i>
-            </Link>
+            </button>
           </div>
         </div>
       );
     }
   }
-
   renderAdminCreate() {
     if (this.props.currentUserId === keys.adminId) {
       return (
@@ -96,7 +115,7 @@ class SongList extends React.Component {
         <div className="ui stackable">
           <div className="row">
             <div
-              className="ui five doubling centered cards"
+              className="ui link five doubling centered cards"
               style={{
                 margin: "2rem auto",
                 overflow: "scroll",
@@ -107,6 +126,12 @@ class SongList extends React.Component {
               {this.renderList()}
             </div>
           </div>
+          {this.state.isModalActive && (
+            <SongDelete
+              hideDeleteModal={this.hideDeleteModal}
+              deletingSong={this.state.deletingSong}
+            />
+          )}
           <div className="row" style={{ marginBottom: "10px" }}>
             {this.renderAdminCreate()}
           </div>
