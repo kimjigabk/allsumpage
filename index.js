@@ -1,8 +1,10 @@
 const express = require("express");
+// const spdy = require("spdy");
+// const fs = require("fs");
 const mongoose = require("mongoose");
-
 const path = require("path");
 const bodyParser = require("body-parser");
+
 const keys = require("./config/keys");
 
 require("./models/User");
@@ -15,9 +17,31 @@ mongoose.connect(keys.mongoURI, {
 
 const app = express();
 
+if (process.env.NODE_ENV === "production") {
+  // Enable reverse proxy support in Express. This causes the
+  // the "X-Forwarded-Proto" header field to be trusted so its
+  // value can be used to determine the protocol. See
+  // http://expressjs.com/api#app-settings for more details.
+  app.enable("trust proxy");
+
+  // Add a handler to inspect the req.secure flag (see
+  // http://expressjs.com/api#req.secure). This allows us
+  // to know whether the request was via http or https.
+  app.use(function(req, res, next) {
+    if (req.secure) {
+      // request was via https, so do no special handling
+      next();
+    } else {
+      // request was via http, so redirect to https
+      res.redirect("https://" + req.headers.host + req.url);
+    }
+  });
+}
 app.use(bodyParser.json());
 
 app.get("/test", (req, res) => {
+  console.log(req.secure);
+
   res.send({ hi: "there" });
 });
 
@@ -33,7 +57,23 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
+
+// const options = {
+//   key: fs.readFileSync(__dirname + "/keys/server.key"),
+//   cert: fs.readFileSync(__dirname + "/keys/server.crt"),
+//   ca: fs.readFileSync(__dirname + "/keys/server.csr")
+// };
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(PORT);
 });
+
+// spdy.createServer(options, app).listen(PORT, error => {
+//   if (error) {
+//     console.error(error);
+//     return process.exit(1);
+//   } else {
+//     console.log("Listening on port: " + PORT + ".");
+//   }
+// });
