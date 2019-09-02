@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import VideoPlayer from "./VideoPlayer";
 import VideoDetail from "./VideoDetail";
 
+import "./VideoSection.css";
+
 class VideoSection extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     const isShow = this.props.video.isShow;
@@ -27,7 +29,7 @@ class VideoSection extends React.Component {
             <div className="eleven wide column">
               <VideoPlayer url={this.props.song.youtubeUrl} />
             </div>
-            <div className="five wide column">
+            <div className="five wide column" id="hajima">
               <VideoDetail
                 title={song.title}
                 artist={song.artist}

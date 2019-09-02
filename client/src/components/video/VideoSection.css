@@ -1,0 +1,11 @@
+/* .ui.stackable.two.column.grid {
+  padding: 0!important;
+} */
+
+@media only screen and (max-width: 767px) {
+  #hajima {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+}

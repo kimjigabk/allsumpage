@@ -46,9 +46,10 @@ class SongList extends React.Component {
     return this.props.songs.map(song => {
       return (
         <div
-          className="card"
           key={song.id}
           onClick={() => this.props.showVideo(song.id)}
+          className="card"
+          style={{ maxHeight: "465px" }}
         >
           <div className="image">
             <img alt="albumart" src={song.imageUrl}></img>
@@ -83,7 +84,10 @@ class SongList extends React.Component {
               <i className="edit icon"></i>
             </Link>
             <button
-              onClick={() => this.showDeleteModal(song)}
+              onClick={e => {
+                e.stopPropagation();
+                this.showDeleteModal(song);
+              }}
               className="compact ui icon button"
             >
               <i className="trash alternate outline icon"></i>
@@ -106,6 +110,12 @@ class SongList extends React.Component {
   }
 
   render() {
+    let height = "75vh";
+    if (this.props.video.isShow) {
+      height = "42vh";
+    } else {
+      height = "75vh";
+    }
     return (
       <div>
         <VideoSection
@@ -118,10 +128,8 @@ class SongList extends React.Component {
             <div
               className="ui link five doubling centered cards"
               style={{
-                overflow: "scroll",
-                overflowX: "hidden",
-                height: "590px",
-                // marginTop: 0
+                overflowY: "auto",
+                height: height
               }}
             >
               {this.renderList()}
@@ -133,7 +141,7 @@ class SongList extends React.Component {
               deletingSong={this.state.deletingSong}
             />
           )}
-          <div className="row" style={{ marginBottom: "10px" }}>
+          <div className="row" style={{ marginTop: "25px" }}>
             {this.renderAdminCreate()}
           </div>
         </div>
