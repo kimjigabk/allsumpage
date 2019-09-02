@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSongs, showVideo, closeVideo } from "../../actions";
+
 import keys from "../../config/keys";
+
+import LoadingCard from "./LoadingCard";
 import VideoSection from "../video/VideoSection";
 import SongDelete from "./SongDelete";
 import SearchBox from "../searchbox/SearchBox";
@@ -40,8 +43,18 @@ class SongList extends React.Component {
   }
 
   renderList() {
-    if (!this.props.songs) {
-      return "ㅇㅇ";
+    if (this.props.songs.length === 0) {
+      return (
+        <React.Fragment>
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+        </React.Fragment>
+      );
     }
     return this.props.songs.map(song => {
       return (
@@ -164,6 +177,7 @@ const mapStateToProps = state => {
 
   return {
     currentUserId: state.auth.userId,
+    // songs: Object.values({}),
     songs: Object.values(state.songs),
     video: state.video
   };
