@@ -17,12 +17,17 @@ class VideoDetail extends React.Component {
         <div className="content">
           <i
             className="close icon link"
-            style={{ position: "absolute", right: "0.95rem" }}
+            style={{ position: "absolute", right: "7px" }}
             onClick={() => {
               closeVideo();
             }}
           ></i>
-          <div className="header">{title}</div>
+          <div
+            className="header"
+            style={{ width: "80%", display: "inline-block" }}
+          >
+            {title}
+          </div>
           <div className="meta">{artist}</div>
           <div className="description">
             <p>{description.slice(0, 150)}</p>

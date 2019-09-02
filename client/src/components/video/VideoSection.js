@@ -23,7 +23,7 @@ class VideoSection extends React.Component {
           className="ui stackable two column grid"
           style={{ margin: "auto 0" }}
         >
-          <div className="ui row">
+          <div className="ui row" style={{ paddingBottom: 0 }}>
             <div className="eleven wide column">
               <VideoPlayer url={this.props.song.youtubeUrl} />
             </div>

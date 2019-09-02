@@ -5,6 +5,7 @@ import { fetchSongs, showVideo, closeVideo } from "../../actions";
 import keys from "../../config/keys";
 import VideoSection from "../video/VideoSection";
 import SongDelete from "./SongDelete";
+import SearchBox from "../searchbox/SearchBox";
 
 class SongList extends React.Component {
   state = {
@@ -111,16 +112,16 @@ class SongList extends React.Component {
           video={this.props.video}
           closeVideo={this.props.closeVideo}
         />
-
+        <SearchBox />
         <div className="ui stackable">
           <div className="row">
             <div
               className="ui link five doubling centered cards"
               style={{
-                margin: "2rem auto",
                 overflow: "scroll",
                 overflowX: "hidden",
-                height: "590px"
+                height: "590px",
+                // marginTop: 0
               }}
             >
               {this.renderList()}

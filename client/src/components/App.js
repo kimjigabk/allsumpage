@@ -13,7 +13,7 @@ import MainPage from "./MainPage";
 class App extends React.Component {
   render() {
     return (
-      <div id="hi" style={{ textAlign: "center" }} className="ui container">
+      <div id="hi" style={{ textAlign: "center"}} className="ui container">
         <Router history={history}>
           <div>
             <Header />
