@@ -5,6 +5,10 @@ cache:
     - node_modules
 services:
   - mongodb
+before_install:
+  - npm install -g npm
+script: 
+  - npm run test -- --coverage --prefix client
 deploy:
   provider: heroku
     api_key:
