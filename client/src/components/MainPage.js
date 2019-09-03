@@ -13,7 +13,7 @@ class MainPage extends React.Component {
           <Link to="/yourpage">너의 페이지에 가기</Link>
         </p>
         <p>
-          테스팅123
+          안녕하세요
         </p>
       </div>
     );
