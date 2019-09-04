@@ -3,15 +3,17 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSongs, showVideo, closeVideo } from "../../actions";
 import { withRouter } from "react-router-dom";
+
 import _ from "lodash";
 
 import keys from "../../config/keys";
+
 import LoadingCardList from "./LoadingCardList";
 import VideoSection from "../video/VideoSection";
 import SongDelete from "./SongDelete";
 import SearchBox from "../searchbox/SearchBox";
 
-class SongList extends React.Component {
+class YourPageList extends React.Component {
   state = {
     isModalActive: false,
     deletingSong: null,
@@ -41,10 +43,11 @@ class SongList extends React.Component {
     return true;
   }
   componentDidMount() {
-    // this.props.closeVideo(); 굳이 닫을필요는 없는듯
+    this.props.closeVideo();
     if (this.props.songs.length === 0) {
       this.props.fetchSongs();
     }
+    // console.log(this.props);
   }
 
   renderList() {
@@ -110,6 +113,7 @@ class SongList extends React.Component {
             >
               <i className="edit icon"></i>
             </Link>
+
             <button
               onClick={e => {
                 e.stopPropagation();
@@ -127,15 +131,10 @@ class SongList extends React.Component {
   renderAdminCreate() {
     if (this.props.currentUserId === keys.adminId) {
       return (
-        <div
-          className="row"
-          style={{ marginTop: "25px", marginBottom: "10px" }}
-        >
-          <div style={{ textAlign: "right" }}>
-            <Link to="/songs/new" className="ui button primary">
-              Create Entry
-            </Link>
-          </div>
+        <div style={{ textAlign: "right" }}>
+          <Link to="/songs/new" className="ui button primary">
+            Create Entry
+          </Link>
         </div>
       );
     }
@@ -164,7 +163,7 @@ class SongList extends React.Component {
               className="ui link five doubling centered cards"
               style={{
                 overflowY: "auto",
-                height
+                height: height
               }}
             >
               {this.renderList()}
@@ -176,14 +175,19 @@ class SongList extends React.Component {
               deletingSong={this.state.deletingSong}
             />
           )}
-          {this.renderAdminCreate()}
+          <div
+            className="row"
+            style={{ marginTop: "25px", marginBottom: "10px" }}
+          >
+            {this.renderAdminCreate()}
+          </div>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ auth, songs, video }) => {
+const mapStateToProps = state => {
   // 원래 data: array of objects, object =   {
   //   "title": "라앤타 기와라이브",
   //   "description": "여러가지음악이 나옴",
@@ -198,16 +202,16 @@ const mapStateToProps = ({ auth, songs, video }) => {
   // Object.values(state.songs)[#] 여긴 #밖에 못들어간다  array라서
 
   return {
-    currentUserId: auth.userId,
-    favoritedSongsIds: auth.favoritedSongsIds,
+    currentUserId: state.auth.userId,
+    favoritedSongsIds: state.auth.favoritedSongsIds,
     // songs: Object.values({}),
-    songs: Object.values(songs),
+    songs: Object.values(state.songs),
     // songs: state.songs,
-    video
+    video: state.video
   };
 };
 
-const page = withRouter(SongList);
+const page = withRouter(YourPageList);
 export default connect(
   mapStateToProps,
   { fetchSongs, showVideo, closeVideo }

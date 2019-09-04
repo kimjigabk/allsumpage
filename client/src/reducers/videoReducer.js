@@ -10,7 +10,7 @@ export default (state = INITIAL_STATE, action) => {
     case SHOW_VIDEO:
       return { ...state, isShow: true, songId: action.payload };
     case CLOSE_VIDEO:
-      return { ...state, isShow: false, songId: null };
+      return { ...INITIAL_STATE };
     default:
       return state;
   }
