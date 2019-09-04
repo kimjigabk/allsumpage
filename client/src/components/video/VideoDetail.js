@@ -1,37 +1,43 @@
 import React from "react";
 import { connect } from "react-redux";
-import axios from "axios";
-
-const tempArr = [1567367270067, 1567367115439, 1567367270067];
-//지금 state.auth에서 userId를 받아오고있음 
-// 여기엔 favoirtesongs arrayh도있기때문에 상관없을ㄷ스
-// 문제: 이걸 connect가 이미 section에 돼있는데 이걸 어떻게하느냐~ 
+// import axios from "axios";
+import { addToFavorites } from "../../actions";
+// const tempArr = [1567367270067, 1567367115439, 1567367270067];
 
 class VideoDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { like: "", star: "" };
+    this.state = { like: "" };
   }
   // 별 하트 색칠 되나 보기용
   onLikeClick = () => {
     this.setState({ like: "active" });
   };
   onStarClick = () => {
-    axios
-      .patch("/api/user", {
-        userId: this.props.user.userId,
-        songId: this.props.songId
-      })
-      .then(function(response) {
-        console.log(response);
-      });
+    if (!this.props.user.isSignedIn) {
+      alert("you need to log in to favorite");
+    } else {
+      this.props.addToFavorites(this.props.user.userId, this.props.songId);
+      // axios
+      //   .patch("/api/user", {
+      //     userId: this.props.user.userId,
+      //     songId: this.props.songId
+      //   })
+      //   .then(function(response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function(error) {
+      //     console.log(error);
+      //   });
+    }
   };
 
   render() {
-    const { title, artist, description, closeVideo } = this.props;
-    if (tempArr.includes(this.props.songId)) {
-      console.log("있네");
-    }
+    const { songId, title, artist, description, closeVideo, user } = this.props;
+    const arr = user.favoritedSongsIds || ""; //로그인안했을때를 대비
+    // if (arr.includes(songId)) {
+    //   console.log("있네");
+    // }
     return (
       <div className="ui fluid card">
         <div className="content">
@@ -60,9 +66,7 @@ class VideoDetail extends React.Component {
           </span>
           <span className="right floated star" onClick={this.onStarClick}>
             <i
-              className={`star icon ${
-                tempArr.includes(this.props.songId) ? "active" : ""
-              }`}
+              className={`star icon ${arr.includes(songId) ? "active" : ""}`}
             ></i>
             Favorite
           </span>
@@ -76,4 +80,7 @@ const mapStateToProps = state => {
     user: state.auth
   };
 };
-export default connect(mapStateToProps)(VideoDetail);
+export default connect(
+  mapStateToProps,
+  { addToFavorites }
+)(VideoDetail);

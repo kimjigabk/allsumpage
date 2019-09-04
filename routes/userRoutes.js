@@ -5,6 +5,7 @@ const User = mongoose.model("users");
 const Song = mongoose.model("songs");
 
 module.exports = app => {
+  //유저 추가, returns a user model as response
   app.post("/api/user", async (req, res) => {
     // console.log(req.body);
     const existingUser = await User.findOne(
@@ -22,11 +23,13 @@ module.exports = app => {
     }
   });
 
+  //유저 정보 수정
+  //returns user (user.array is not updated.)
   app.patch("/api/user", async (req, res) => {
     const user = await User.findOneAndUpdate(
       { googleId: req.body.userId },
       { $addToSet: { favoritedSongsIds: req.body.songId } }
     );
-    res.send([...user.favoritedSongsIds, req.body.songId]);
+    res.send(user);
   });
 };

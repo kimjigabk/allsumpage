@@ -7,3 +7,4 @@ export const DELETE_SONG = "DELETE_SONG"; // delete one
 export const EDIT_SONG = "EDIT_SONG"; //
 export const SHOW_VIDEO = "SHOW_VIDEO"; //
 export const CLOSE_VIDEO = "CLOSE_VIDEO";
+export const ADD_FAVORITES = "ADD_FAVORITES"

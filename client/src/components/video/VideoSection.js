@@ -18,6 +18,7 @@ class VideoSection extends React.Component {
   }
   render() {
     const { video, closeVideo, song } = this.props;
+    // console.log(song);
     if (video.isShow) {
       return (
         <div
@@ -30,7 +31,7 @@ class VideoSection extends React.Component {
             </div>
             <div className="five wide column" id="hajima">
               <VideoDetail
-                songId={song.songId}
+                songId={song.id}
                 title={song.title}
                 artist={song.artist}
                 description={song.description}

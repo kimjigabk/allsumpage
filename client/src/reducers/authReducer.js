@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT } from "../actions/types";
+import { SIGN_IN, SIGN_OUT, ADD_FAVORITES } from "../actions/types";
 
 const INITIAL_STATE = {
   isSignedIn: null,
@@ -13,6 +13,18 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, isSignedIn: true, ...action.payload };
     case SIGN_OUT:
       return { ...INITIAL_STATE, isSignedIn: false };
+    case ADD_FAVORITES:
+      const arr = state.favoritedSongsIds;
+      // console.log("전");
+      // console.log(arr);
+      if (arr.includes(action.payload)) {
+        // console.log("이미 있군..");
+      } else {
+        arr.push(action.payload);
+        // console.log("후");
+        // console.log(state.favoritedSongsIds);
+      }
+      return { ...state, favoritedSongsIds: arr };
     default:
       return state;
   }
