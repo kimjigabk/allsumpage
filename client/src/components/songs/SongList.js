@@ -13,7 +13,8 @@ import SearchBox from "../searchbox/SearchBox";
 class SongList extends React.Component {
   state = {
     isModalActive: false,
-    deletingSong: null
+    deletingSong: null,
+    serachBoxInput: ""
   };
   showDeleteModal = song => {
     this.setState({ isModalActive: true, deletingSong: song });
@@ -52,30 +53,36 @@ class SongList extends React.Component {
           <LoadingCard />
           <LoadingCard />
           <LoadingCard />
-          <LoadingCard />
         </React.Fragment>
       );
     }
-    return this.props.songs.map(song => {
-      return (
-        <div
-          key={song.id}
-          onClick={() => this.props.showVideo(song.id)}
-          className="card"
-          style={{ maxHeight: "465px" }}
-        >
-          <div className="image">
-            <img alt="albumart" src={song.imageUrl}></img>
+    return this.props.songs
+      .filter(song =>
+        song.title
+          .concat(song.artist, song.description)
+          .toLowerCase()
+          .includes(this.state.serachBoxInput)
+      )
+      .map(song => {
+        return (
+          <div
+            key={song.id}
+            onClick={() => this.props.showVideo(song.id)}
+            className="card"
+            style={{ maxHeight: "465px" }}
+          >
+            <div className="image">
+              <img alt="albumart" src={song.imageUrl}></img>
+            </div>
+            <div className="content">
+              <div className="header">{song.title}</div>
+              <div className="meta">{song.artist}</div>
+              <div className="description">{song.description.slice(0, 40)}</div>
+            </div>
+            {this.renderAdminEditDelete(song)}
           </div>
-          <div className="content">
-            <div className="header">{song.title}</div>
-            <div className="meta">{song.artist}</div>
-            <div className="description">{song.description.slice(0, 40)}</div>
-          </div>
-          {this.renderAdminEditDelete(song)}
-        </div>
-      );
-    });
+        );
+      });
   }
   renderAdminEditDelete(song) {
     if (this.props.currentUserId === keys.adminId) {
@@ -117,6 +124,9 @@ class SongList extends React.Component {
       );
     }
   }
+  onInputChange = input => {
+    this.setState({ serachBoxInput: input.toLowerCase() });
+  };
 
   render() {
     let height = "75vh";
@@ -125,13 +135,13 @@ class SongList extends React.Component {
     } else {
       height = "75vh";
     }
+    const { video, closeVideo, songs } = this.props;
+    const vsong = songs.filter(song => song.id === this.props.video.songId)[0];
+
     return (
       <div>
-        <VideoSection
-          video={this.props.video}
-          closeVideo={this.props.closeVideo}
-        />
-        <SearchBox />
+        <VideoSection video={video} closeVideo={closeVideo} song={vsong} />
+        <SearchBox onInputChange={this.onInputChange} songs={songs} />
         <div className="ui stackable">
           <div className="row">
             <div
@@ -161,6 +171,7 @@ class SongList extends React.Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   // 원래 data: array of objects, object =   {
   //   "title": "라앤타 기와라이브",

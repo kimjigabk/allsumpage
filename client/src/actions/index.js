@@ -59,11 +59,12 @@ export const deleteSong = id => async (dispatch, getState) => {
   history.push("/songs");
 };
 
-export const signIn = userId => async dispatch => {
-  await axios.post("/api/user/", { userId });
+export const signIn = (userId, name) => async dispatch => {
+  const response = await axios.post("/api/user/", { userId, name });
+  const { displayName, favoritedSongsIds } = response.data;
   dispatch({
     type: SIGN_IN,
-    payload: userId
+    payload: { userId, displayName, favoritedSongsIds }
   });
 };
 

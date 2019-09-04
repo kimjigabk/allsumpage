@@ -1,17 +1,37 @@
 import React from "react";
+import { connect } from "react-redux";
+import axios from "axios";
+
+const tempArr = [1567367270067, 1567367115439, 1567367270067];
+//지금 state.auth에서 userId를 받아오고있음 
+// 여기엔 favoirtesongs arrayh도있기때문에 상관없을ㄷ스
+// 문제: 이걸 connect가 이미 section에 돼있는데 이걸 어떻게하느냐~ 
 
 class VideoDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { active: "" };
+    this.state = { like: "", star: "" };
   }
   // 별 하트 색칠 되나 보기용
-  onIconClick = () => {
-    this.setState({ active: "active" });
+  onLikeClick = () => {
+    this.setState({ like: "active" });
+  };
+  onStarClick = () => {
+    axios
+      .patch("/api/user", {
+        userId: this.props.user.userId,
+        songId: this.props.songId
+      })
+      .then(function(response) {
+        console.log(response);
+      });
   };
 
   render() {
     const { title, artist, description, closeVideo } = this.props;
+    if (tempArr.includes(this.props.songId)) {
+      console.log("있네");
+    }
     return (
       <div className="ui fluid card">
         <div className="content">
@@ -34,17 +54,15 @@ class VideoDetail extends React.Component {
           </div>
         </div>
         <div className="extra content">
-          <span className="left floated like">
-            <i
-              className={`like icon ${this.state.active}`}
-              onClick={this.onIconClick}
-            ></i>
+          <span className="left floated like" onClick={this.onLikeClick}>
+            <i className={`like icon ${this.state.like}`}></i>
             Like
           </span>
-          <span className="right floated star">
+          <span className="right floated star" onClick={this.onStarClick}>
             <i
-              className={`star icon ${this.state.active}`}
-              onClick={this.onIconClick}
+              className={`star icon ${
+                tempArr.includes(this.props.songId) ? "active" : ""
+              }`}
             ></i>
             Favorite
           </span>
@@ -53,5 +71,9 @@ class VideoDetail extends React.Component {
     );
   }
 }
-
-export default VideoDetail;
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  };
+};
+export default connect(mapStateToProps)(VideoDetail);
