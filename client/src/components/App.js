@@ -24,6 +24,7 @@ class App extends React.Component {
               <Route path="/songs/edit/:id" exact component={SongEdit} />
               <Route path="/songs/:id" exact component={SongDetail} />
               <Route path="/yourpage/" exact component={YourPage} />
+              <Route path="/yourpage/:id" exact component={YourPage} />
             </Switch>
           </div>
         </Router>

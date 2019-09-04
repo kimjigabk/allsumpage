@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
+    "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
@@ -15,7 +16,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && sw-precache --config=sw-precache-config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -35,6 +36,7 @@
     ]
   },
   "devDependencies": {
-    "http-proxy-middleware": "^0.19.1"
+    "http-proxy-middleware": "^0.19.1",
+    "sw-precache": "^5.2.1"
   }
 }

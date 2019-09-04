@@ -1,7 +1,13 @@
 import React from "react";
+import SongList from "../songs/SongList";
 
 const YourPage = () => {
-  return <div>여긴너의페이지야</div>;
+  return (
+    <div>
+      <p>당신이 favorite한 음악만 보여준다</p>
+      <SongList />
+    </div>
+  );
 };
 
 export default YourPage;

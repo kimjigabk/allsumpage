@@ -2,33 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 // import axios from "axios";
 import { addToFavorites } from "../../actions";
+
+// import "./VideoDetail.css";
 // const tempArr = [1567367270067, 1567367115439, 1567367270067];
 
 class VideoDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { like: "" };
+    this.state = { like: "", heart: "" };
   }
   // 별 하트 색칠 되나 보기용
   onLikeClick = () => {
     this.setState({ like: "active" });
   };
+
   onStarClick = () => {
     if (!this.props.user.isSignedIn) {
       alert("you need to log in to favorite");
     } else {
       this.props.addToFavorites(this.props.user.userId, this.props.songId);
-      // axios
-      //   .patch("/api/user", {
-      //     userId: this.props.user.userId,
-      //     songId: this.props.songId
-      //   })
-      //   .then(function(response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error);
-      //   });
     }
   };
 
