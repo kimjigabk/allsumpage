@@ -12,6 +12,7 @@ before_install:
   - npm install -g npm
 script:
   - cd client
+  - npm install -g npm
   - npm run test
 deploy:
   provider: heroku
