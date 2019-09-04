@@ -23,8 +23,11 @@ class GoogleAuth extends React.Component {
   }
 
   onAuthChange = isSignedIn => {
+    const currentUser = this.auth.currentUser.get();
     if (isSignedIn) {
-      this.props.signIn(this.auth.currentUser.get().getId());
+      let id = currentUser.getId();
+      let name = currentUser.w3.ig;
+      this.props.signIn(id, name);
     } else {
       this.props.signOut();
     }
@@ -43,20 +46,33 @@ class GoogleAuth extends React.Component {
       return null;
     } else if (this.props.isSigned) {
       return (
-        <button
-          onClick={this.onSignOutClick}
-          className="ui basic google button"
+        <div
+          className="ui simple dropdown item"
+          style={{ paddingBottom: "10px", borderRight: 0 }}
         >
-          <i className="google icon" />
-          Sign Out
-        </button>
+          {this.props.displayName}
+          <div className="menu transition">
+            <div className="item" onClick={this.onSignOutClick}>
+              <i className="google icon" />
+              Sign Out
+            </div>
+            <div className="item" onClick={this.onSignOutClick}>
+              <i className="google icon" />
+              Sign Out
+            </div>
+            <div className="item" onClick={this.onSignOutClick}>
+              <i className="google icon" />
+              Sign Out
+            </div>
+          </div>
+        </div>
       );
     } else {
       return (
-        <button onClick={this.onSignInClick} className="ui basic google button">
+        <span onClick={this.onSignInClick} className="ui item link">
           <i className="google icon" />
           Sign in with Google
-        </button>
+        </span>
       );
     }
   }
@@ -65,7 +81,10 @@ class GoogleAuth extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return { isSigned: state.auth.isSignedIn };
+  return {
+    isSigned: state.auth.isSignedIn,
+    displayName: state.auth.displayName
+  };
 };
 //state = from reducer, state.auth = authreducer
 //mapstateToProps :: isSignedIn을 props에 넣어좀

@@ -5,14 +5,15 @@ import GoogleAuth from "./GoogleAuth";
 
 const Header = () => {
   return (
-    <div>
-      <div className="ui secondary pointing menu">
-        <Link to="/" className="item">
-          Allsum
-        </Link>
-        <div className="right menu">
-          <GoogleAuth />
-        </div>
+    <div
+      className="ui tabular menu"
+      style={{ height: "39px", marginBottom: "1px" }}
+    >
+      <Link to="/" className="item">
+        Allsum
+      </Link>
+      <div className="right menu">
+        <GoogleAuth />
       </div>
     </div>
   );

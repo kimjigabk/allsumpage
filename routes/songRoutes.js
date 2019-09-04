@@ -52,22 +52,22 @@ module.exports = app => {
     Song.findOneAndUpdate(
       { id: req.params.id },
       { title, artist, description, youtubeUrl, imageUrl },
-      function(err, response) {
+      function(err, song) {
         if (err) {
           res.status(422).send(err);
         } else {
-          res.send(response);
+          res.send(song);
         }
       }
     );
   });
 
   app.delete("/api/songs/:id", requireLogin, (req, res) => {
-    Song.findOneAndDelete({ id: req.params.id }, function(err, response) {
+    Song.findOneAndDelete({ id: req.params.id }, function(err, song) {
       if (err) {
         res.status(422).send(err);
       } else {
-        res.send(response);
+        res.send(song);
       }
     });
   });

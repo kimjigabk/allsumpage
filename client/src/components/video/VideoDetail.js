@@ -1,17 +1,43 @@
 import React from "react";
+import { connect } from "react-redux";
+// import axios from "axios";
+import { addToFavorites } from "../../actions";
+// const tempArr = [1567367270067, 1567367115439, 1567367270067];
 
 class VideoDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { active: "" };
+    this.state = { like: "" };
   }
   // 별 하트 색칠 되나 보기용
-  onIconClick = () => {
-    this.setState({ active: "active" });
+  onLikeClick = () => {
+    this.setState({ like: "active" });
+  };
+  onStarClick = () => {
+    if (!this.props.user.isSignedIn) {
+      alert("you need to log in to favorite");
+    } else {
+      this.props.addToFavorites(this.props.user.userId, this.props.songId);
+      // axios
+      //   .patch("/api/user", {
+      //     userId: this.props.user.userId,
+      //     songId: this.props.songId
+      //   })
+      //   .then(function(response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function(error) {
+      //     console.log(error);
+      //   });
+    }
   };
 
   render() {
-    const { title, artist, description, closeVideo } = this.props;
+    const { songId, title, artist, description, closeVideo, user } = this.props;
+    const arr = user.favoritedSongsIds || ""; //로그인안했을때를 대비
+    // if (arr.includes(songId)) {
+    //   console.log("있네");
+    // }
     return (
       <div className="ui fluid card">
         <div className="content">
@@ -34,17 +60,13 @@ class VideoDetail extends React.Component {
           </div>
         </div>
         <div className="extra content">
-          <span className="left floated like">
-            <i
-              className={`like icon ${this.state.active}`}
-              onClick={this.onIconClick}
-            ></i>
+          <span className="left floated like" onClick={this.onLikeClick}>
+            <i className={`like icon ${this.state.like}`}></i>
             Like
           </span>
-          <span className="right floated star">
+          <span className="right floated star" onClick={this.onStarClick}>
             <i
-              className={`star icon ${this.state.active}`}
-              onClick={this.onIconClick}
+              className={`star icon ${arr.includes(songId) ? "active" : ""}`}
             ></i>
             Favorite
           </span>
@@ -53,5 +75,12 @@ class VideoDetail extends React.Component {
     );
   }
 }
-
-export default VideoDetail;
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  };
+};
+export default connect(
+  mapStateToProps,
+  { addToFavorites }
+)(VideoDetail);
