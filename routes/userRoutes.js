@@ -5,9 +5,15 @@ const User = mongoose.model("users");
 const Song = mongoose.model("songs");
 
 module.exports = app => {
+  app.get("/api/isadmin/:id", (req, res) => {
+    if (req.params.id === keys.adminId) {
+      res.send(true);
+    } else {
+      res.send(false);
+    }
+  });
   //유저 추가, returns a user model as response
   app.post("/api/user", async (req, res) => {
-    // console.log(req.body);
     const existingUser = await User.findOne(
       { googleId: req.body.userId },
       "-_id -__v"

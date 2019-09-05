@@ -44,9 +44,10 @@ export const editSong = (id, formValues) => async (dispatch, getState) => {
     ...formValues,
     authorId
   });
+  const updatedSong = { ...response.data, ...formValues };
   dispatch({
     type: EDIT_SONG,
-    payload: response.data
+    payload: updatedSong
   });
   history.push("/songs");
 };
@@ -62,11 +63,12 @@ export const deleteSong = id => async (dispatch, getState) => {
 
 //auth
 export const signIn = (userId, name) => async dispatch => {
+  const isAdmin = await axios.get(`/api/isadmin/${userId}`);
   const response = await axios.post("/api/user/", { userId, name });
   const { displayName, favoritedSongsIds } = response.data;
   dispatch({
     type: SIGN_IN,
-    payload: { userId, displayName, favoritedSongsIds }
+    payload: { userId, displayName, favoritedSongsIds, isAdmin: isAdmin.data }
   });
 };
 

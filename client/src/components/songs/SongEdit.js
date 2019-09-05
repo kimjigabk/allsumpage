@@ -3,7 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSong, editSong } from "../../actions";
 import SongForm from "./SongForm";
-import keys from "../../config/keys";
 
 class SongEdit extends React.Component {
   componentDidMount() {
@@ -13,7 +12,7 @@ class SongEdit extends React.Component {
     this.props.editSong(this.props.match.params.id, formValues);
   };
   render() {
-    if (this.props.currentUserId !== keys.adminId) {
+    if (!this.props.isAdmin) {
       return <div>로그인하세요</div>;
     }
     if (!this.props.song) {
@@ -40,8 +39,8 @@ class SongEdit extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    currentUserId: state.auth.userId,
-    song: state.songs[ownProps.match.params.id]
+    song: state.songs[ownProps.match.params.id],
+    isAdmin: state.auth.isAdmin
   };
 };
 

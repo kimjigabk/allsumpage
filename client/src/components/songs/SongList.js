@@ -5,7 +5,6 @@ import { fetchSongs, showVideo, closeVideo } from "../../actions";
 import { withRouter } from "react-router-dom";
 import _ from "lodash";
 
-import keys from "../../config/keys";
 import LoadingCardList from "./LoadingCardList";
 import VideoSection from "../video/VideoSection";
 import SongDelete from "./SongDelete";
@@ -50,6 +49,7 @@ class SongList extends React.Component {
   renderList() {
     const isYourPage = this.props.match.path.includes("yourpage");
     let songs = this.props.songs;
+    const isAdmin = this.props.isAdmin;
     if (isYourPage) {
       const { currentUserId } = this.props;
       if (!currentUserId) {
@@ -91,54 +91,47 @@ class SongList extends React.Component {
               <div className="meta">{song.artist}</div>
               <div className="description">{song.description.slice(0, 40)}</div>
             </div>
-            {this.renderAdminEditDelete(song)}
+            {isAdmin && this.renderAdminEditDelete(song)}
           </div>
         );
       });
   }
   renderAdminEditDelete(song) {
-    if (this.props.currentUserId === keys.adminId) {
-      return (
-        <div className="extra content">
-          <div className="">
-            <Link
-              onClick={e => {
-                e.stopPropagation();
-              }}
-              to={`/songs/edit/${song.id}`}
-              className="compact ui icon button"
-            >
-              <i className="edit icon"></i>
-            </Link>
-            <button
-              onClick={e => {
-                e.stopPropagation();
-                this.showDeleteModal(song);
-              }}
-              className="compact ui icon button"
-            >
-              <i className="trash alternate outline icon"></i>
-            </button>
-          </div>
+    return (
+      <div className="extra content">
+        <div className="">
+          <Link
+            onClick={e => {
+              e.stopPropagation();
+            }}
+            to={`/songs/edit/${song.id}`}
+            className="compact ui icon button"
+          >
+            <i className="edit icon"></i>
+          </Link>
+          <button
+            onClick={e => {
+              e.stopPropagation();
+              this.showDeleteModal(song);
+            }}
+            className="compact ui icon button"
+          >
+            <i className="trash alternate outline icon"></i>
+          </button>
         </div>
-      );
-    }
+      </div>
+    );
   }
   renderAdminCreate() {
-    if (this.props.currentUserId === keys.adminId) {
-      return (
-        <div
-          className="row"
-          style={{ marginTop: "25px", marginBottom: "10px" }}
-        >
-          <div style={{ textAlign: "right" }}>
-            <Link to="/songs/new" className="ui button primary">
-              Create Entry
-            </Link>
-          </div>
+    return (
+      <div className="row" style={{ marginTop: "25px", marginBottom: "10px" }}>
+        <div style={{ textAlign: "right" }}>
+          <Link to="/songs/new" className="ui button primary">
+            Create Entry
+          </Link>
         </div>
-      );
-    }
+      </div>
+    );
   }
   onInputChange = input => {
     this.setState({ serachBoxInput: input.toLowerCase() });
@@ -151,7 +144,7 @@ class SongList extends React.Component {
     } else {
       height = "75vh";
     }
-    const { video, closeVideo, songs } = this.props;
+    const { video, closeVideo, songs, isAdmin } = this.props;
     const vsong = songs.filter(song => song.id === this.props.video.songId)[0];
 
     return (
@@ -176,7 +169,7 @@ class SongList extends React.Component {
               deletingSong={this.state.deletingSong}
             />
           )}
-          {this.renderAdminCreate()}
+          {isAdmin && this.renderAdminCreate()}
         </div>
       </div>
     );
@@ -184,22 +177,11 @@ class SongList extends React.Component {
 }
 
 const mapStateToProps = ({ auth, songs, video }) => {
-  // 원래 data: array of objects, object =   {
-  //   "title": "라앤타 기와라이브",
-  //   "description": "여러가지음악이 나옴",
-  //   "id": "ABASFSAFSQRWQEQWE",
-  //   "youtubeUrl": "https://www.youtube.com/watch?v=uWF9B4yh3ZM",
-  //   "authorId": "103336108693548827446",
-  //   "artist": "ㅎㅇ"
-  // },
-  // console.log(state.songs); 이건 object. key = id from above,, value = the whole object above
-  // state.songs[KEY] 를하면 하나의 whole object를 리턴받음 .{title: .. description: ..}
-  // console.log(Object.values(state.songs)); 이건 array (map을 쓰기위해.)
-  // Object.values(state.songs)[#] 여긴 #밖에 못들어간다  array라서
-
+  const { userId, favoritedSongsIds, isAdmin } = auth;
   return {
-    currentUserId: auth.userId,
-    favoritedSongsIds: auth.favoritedSongsIds,
+    currentUserId: userId,
+    favoritedSongsIds: favoritedSongsIds,
+    isAdmin,
     // songs: Object.values({}),
     songs: Object.values(songs),
     // songs: state.songs,
