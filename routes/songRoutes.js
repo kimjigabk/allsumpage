@@ -5,23 +5,18 @@ const requireLogin = require("../middlewares/requireLogin");
 
 module.exports = app => {
   app.get("/api/songs", (req, res) => {
-    // res.sendFile(path.resolve(__dirname, "test.json"));
     Song.find({}, "-_id -__v", function(err, songs) {
       res.send(songs);
     });
   });
 
   app.get("/api/songs/:id", (req, res) => {
-    // res.sendFile(path.resolve(__dirname, "test.json"));
-    Song.findOne({ id: req.params.id }, function(err, song) {
+    Song.findOne({ id: req.params.id }, "-_id -__v", function(err, song) {
       res.send(song);
     });
   });
 
   app.post("/api/songs", requireLogin, async (req, res) => {
-    // if (req.body.authorId !== keys.adminId) {
-    //   return res.status(401).send({ error: "You must log in" });
-    // }
     const { title, artist, description, youtubeUrl, authorId } = req.body;
     let imageUrl;
     if (!req.body.imageUrl) {
@@ -47,19 +42,18 @@ module.exports = app => {
     }
   });
 
-  app.patch("/api/songs/:id", requireLogin, (req, res) => {
+  app.patch("/api/songs/:id", requireLogin, async (req, res) => {
     const { title, artist, description, youtubeUrl, imageUrl } = req.body;
-    Song.findOneAndUpdate(
-      { id: req.params.id },
-      { title, artist, description, youtubeUrl, imageUrl },
-      function(err, song) {
-        if (err) {
-          res.status(422).send(err);
-        } else {
-          res.send(song);
-        }
-      }
-    );
+
+    try {
+      song = await Song.findOneAndUpdate(
+        { id: req.params.id },
+        { title, artist, description, youtubeUrl, imageUrl }
+      ).select("-_id -__v");
+      res.send(song);
+    } catch (err) {
+      res.status(422).send(err);
+    }
   });
 
   app.delete("/api/songs/:id", requireLogin, (req, res) => {

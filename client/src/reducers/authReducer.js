@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   isSignedIn: null,
   userId: null,
   displayName: null,
-  favoritedSongsIds: null
+  favoritedSongsIds: null,
+  isAdmin: false
 };
 
 export default (state = INITIAL_STATE, action) => {

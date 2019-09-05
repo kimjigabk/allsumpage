@@ -1,10 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-// import axios from "axios";
 import { addToFavorites } from "../../actions";
-
-// import "./VideoDetail.css";
-// const tempArr = [1567367270067, 1567367115439, 1567367270067];
 
 class VideoDetail extends React.Component {
   constructor(props) {
@@ -26,10 +22,7 @@ class VideoDetail extends React.Component {
 
   render() {
     const { songId, title, artist, description, closeVideo, user } = this.props;
-    const arr = user.favoritedSongsIds || ""; //로그인안했을때를 대비
-    // if (arr.includes(songId)) {
-    //   console.log("있네");
-    // }
+    const arr = user.favoritedSongsIds || ""; //로그인 안했을때를 대비
     return (
       <div className="ui fluid card">
         <div className="content">
