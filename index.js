@@ -1,4 +1,5 @@
 const express = require("express");
+const helpmet = require("helmet");
 const compression = require("compression");
 // const spdy = require("spdy");
 // const fs = require("fs");
@@ -17,7 +18,7 @@ mongoose.connect(keys.mongoURI, {
 });
 
 const app = express();
-
+app.use(helmet());
 app.use(compression());
 app.use(bodyParser.json());
 

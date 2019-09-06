@@ -9,6 +9,7 @@ import SongEdit from "./songs/SongEdit";
 import SongDetail from "./songs/SongDetail";
 import MainPage from "./MainPage";
 import YourPage from "./yourpage/YourPage";
+import AboutPage from "./about/AboutPage";
 
 class App extends React.Component {
   render() {
@@ -25,6 +26,7 @@ class App extends React.Component {
               <Route path="/songs/:id" exact component={SongDetail} />
               <Route path="/yourpage/" exact component={YourPage} />
               <Route path="/yourpage/:id" exact component={YourPage} />
+              <Route path="/about" exact component={AboutPage} />
             </Switch>
           </div>
         </Router>
