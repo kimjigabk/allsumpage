@@ -41,9 +41,9 @@ class SongList extends React.Component {
   }
   componentDidMount() {
     // this.props.closeVideo(); 굳이 닫을필요는 없는듯
-    if (this.props.songs.length === 0) {
-      this.props.fetchSongs();
-    }
+    // if (this.props.songs.length === 0) {
+    this.props.fetchSongs();
+    // }
   }
 
   renderList() {

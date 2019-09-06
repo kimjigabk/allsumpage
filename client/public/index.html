@@ -31,10 +31,30 @@
     <div id="root"></div>
     <div id="modal"></div>
 
-    <link
+    <!-- Decreases Document On Load time by 14% -->
+    <script type="text/javascript">
+      const loadstyleSheet = src => {
+        if (document.createStylesheet) {
+          document.createStylesheet(src);
+        } else {
+          const stylesheet = document.createElement("link");
+          stylesheet.href = src;
+          stylesheet.type = "text/css";
+          stylesheet.rel = "stylesheet";
+          document.getElementsByTagName("head")[0].appendChild(stylesheet);
+        }
+      };
+      window.onload = function() {
+        loadstyleSheet(
+          "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+        );
+      };
+    </script>
+
+    <!-- <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-    />
+    /> -->
     <script src="https://apis.google.com/js/api.js"></script>
   </body>
 </html>

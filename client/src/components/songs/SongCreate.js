@@ -3,14 +3,13 @@ import { connect } from "react-redux";
 
 import { createSong } from "../../actions";
 import SongForm from "./SongForm";
-import keys from "../../config/keys";
 
 class SongCreate extends Component {
   onSubmit = formValues => {
     this.props.createSong(formValues);
   };
   render() {
-    if (this.props.currentUserId !== keys.adminId) {
+    if (!this.props.isAdmin) {
       return <div>로그인하세요</div>;
     }
     return (
@@ -21,9 +20,10 @@ class SongCreate extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = ({ auth }) => {
   return {
-    currentUserId: state.auth.userId
+    currentUserId: auth.userId,
+    isAdmin: auth.isAdmin
   };
 };
 
