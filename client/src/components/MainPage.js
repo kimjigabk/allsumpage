@@ -6,6 +6,7 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
+        <p>안녕하세요</p>
         <p>
           <Link to="/songs">반가워요</Link>
         </p>
@@ -13,7 +14,7 @@ class MainPage extends React.Component {
           <Link to="/yourpage">너의 페이지에 가기</Link>
         </p>
         <p>
-          안녕하세요
+          <Link to="/about">알섬이란? </Link>
         </p>
       </div>
     );
