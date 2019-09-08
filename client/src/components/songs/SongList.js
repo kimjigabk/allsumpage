@@ -40,10 +40,7 @@ class SongList extends React.Component {
     return true;
   }
   componentDidMount() {
-    // this.props.closeVideo(); 굳이 닫을필요는 없는듯
-    if (this.props.songs.length === 0) {
-      this.props.fetchSongs();
-    }
+    this.props.fetchSongs();
   }
 
   renderList() {
@@ -55,6 +52,7 @@ class SongList extends React.Component {
       if (!currentUserId) {
         return <LoadingCardList />;
       }
+      // render based on id array
       let tempSongs = {};
       let originalSongs = _.mapKeys(songs, "id");
       if (currentUserId && songs) {

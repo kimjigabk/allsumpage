@@ -1,15 +1,15 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import history from "../history";
 
 import Header from "./Header";
 import SongList from "./songs/SongList";
-import SongCreate from "./songs/SongCreate";
-import SongEdit from "./songs/SongEdit";
-import SongDetail from "./songs/SongDetail";
-import MainPage from "./MainPage";
+import MainPage from "./mainpage/MainPage";
 import YourPage from "./yourpage/YourPage";
-import AboutPage from "./about/AboutPage";
+const AboutPage = lazy(() => import("./about/AboutPage"));
+const SongCreate = lazy(() => import("./songs/SongCreate"));
+const SongEdit = lazy(() => import("./songs/SongEdit"));
+// import AboutPage from "./about/AboutPage";
 
 class App extends React.Component {
   render() {
@@ -21,12 +21,13 @@ class App extends React.Component {
             <Switch>
               <Route path="/" exact component={MainPage} />
               <Route path="/songs" exact component={SongList} />
-              <Route path="/songs/new" exact component={SongCreate} />
-              <Route path="/songs/edit/:id" exact component={SongEdit} />
-              <Route path="/songs/:id" exact component={SongDetail} />
               <Route path="/yourpage/" exact component={YourPage} />
               <Route path="/yourpage/:id" exact component={YourPage} />
-              <Route path="/about" exact component={AboutPage} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Route path="/about" exact component={AboutPage} />
+                <Route path="/songs/new" exact component={SongCreate} />
+                <Route path="/songs/edit/:id" exact component={SongEdit} />
+              </Suspense>
             </Switch>
           </div>
         </Router>
