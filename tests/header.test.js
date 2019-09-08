@@ -16,7 +16,7 @@ afterEach(async () => {
   await browser.close();
 });
 
-test("header has correct text", async () => {
+test.only("header has correct text", async () => {
   const text = await page.$eval("a.item", el => el.innerHTML);
   expect(text).toEqual("Allsum");
 });
