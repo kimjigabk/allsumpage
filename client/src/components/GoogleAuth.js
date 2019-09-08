@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { signIn, signOut } from "../actions";
 import keys from "../config/keys";
@@ -52,13 +53,19 @@ class GoogleAuth extends React.Component {
         >
           {this.props.displayName}
           <div className="menu transition">
-            <div className="item" onClick={this.onSignOutClick}>
-              <i className="google icon" />
-              Sign Out
+            <div
+              className="item"
+              onClick={() => this.props.history.push("/songs")}
+            >
+              <i className="play icon" />
+              Songs
             </div>
-            <div className="item" onClick={this.onSignOutClick}>
-              <i className="google icon" />
-              Sign Out
+            <div
+              className="item"
+              onClick={() => this.props.history.push("/yourpage")}
+            >
+              <i className="music icon" />
+              Yours
             </div>
             <div className="item" onClick={this.onSignOutClick}>
               <i className="google icon" />
@@ -86,10 +93,9 @@ const mapStateToProps = state => {
     displayName: state.auth.displayName
   };
 };
-//state = from reducer, state.auth = authreducer
-//mapstateToProps :: isSignedIn을 props에 넣어좀
-// , {signIn, signOut} ==> 두가지 action을 props에 넣어줌
+
+const menu = withRouter(GoogleAuth);
 export default connect(
   mapStateToProps,
   { signIn, signOut }
-)(GoogleAuth);
+)(menu);

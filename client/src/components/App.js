@@ -4,9 +4,9 @@ import history from "../history";
 
 import Header from "./Header";
 import SongList from "./songs/SongList";
-import MainPage from "./mainpage/MainPage";
-import YourPage from "./yourpage/YourPage";
-const AboutPage = lazy(() => import("./about/AboutPage"));
+import MainPage from "./pages/mainpage/MainPage";
+import YourPage from "./pages/yourpage/YourPage";
+const AboutPage = lazy(() => import("./pages/aboutpage/AboutPage"));
 const SongCreate = lazy(() => import("./songs/SongCreate"));
 const SongEdit = lazy(() => import("./songs/SongEdit"));
 // import AboutPage from "./about/AboutPage";
