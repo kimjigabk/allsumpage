@@ -1,5 +1,5 @@
 import React from "react";
-import SongList from "../songs/SongList";
+import SongList from "../../songs/SongList";
 
 const YourPage = () => {
   return (
