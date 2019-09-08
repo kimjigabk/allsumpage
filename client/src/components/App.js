@@ -23,7 +23,7 @@ class App extends React.Component {
               <Route path="/songs" exact component={SongList} />
               <Route path="/yourpage/" exact component={YourPage} />
               <Route path="/yourpage/:id" exact component={YourPage} />
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div className="ui active loader"></div>}>
                 <Route path="/about" exact component={AboutPage} />
                 <Route path="/songs/new" exact component={SongCreate} />
                 <Route path="/songs/edit/:id" exact component={SongEdit} />

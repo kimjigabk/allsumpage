@@ -19,7 +19,7 @@ const MainPage = ({ history }) => {
           }}
         ></p>
         <div className="item" onClick={() => history.push("/about")}>
-          <div className="ui small rounded image">
+          <div className="ui small image">
             <img alt="about" src="images/150150.jpg"></img>
           </div>
           <div className="middle aligned content">
