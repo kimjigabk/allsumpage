@@ -6,13 +6,21 @@ const requireLogin = require("../middlewares/requireLogin");
 module.exports = app => {
   app.get("/api/songs", (req, res) => {
     Song.find({}, "-_id -__v", function(err, songs) {
-      res.send(songs);
+      if (err) {
+        res.status(422).send(err);
+      } else {
+        res.send(songs);
+      }
     });
   });
 
   app.get("/api/songs/:id", (req, res) => {
     Song.findOne({ id: req.params.id }, "-_id -__v", function(err, song) {
-      res.send(song);
+      if (err) {
+        res.status(422).send(err);
+      } else {
+        res.send(song);
+      }
     });
   });
 
