@@ -136,11 +136,11 @@ class SongList extends React.Component {
   };
 
   render() {
-    let height = "75vh";
+    let height = "80vh";
     if (this.props.video.isShow) {
       height = "42vh";
     } else {
-      height = "75vh";
+      height = "80vh";
     }
     const { video, closeVideo, songs, isAdmin } = this.props;
     const vsong = songs.filter(song => song.id === this.props.video.songId)[0];
