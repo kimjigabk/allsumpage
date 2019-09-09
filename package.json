@@ -32,7 +32,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^3.21.0",
-    "mongoose": "^5.6.11"
+    "mongoose": "^5.6.11",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",

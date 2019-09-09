@@ -1,21 +1,25 @@
-const keys = require("../config/keys");
 const mongoose = require("mongoose");
 const Song = mongoose.model("songs");
 const requireLogin = require("../middlewares/requireLogin");
+const cleanCache = require("../middlewares/cleanCache");
 
 module.exports = app => {
-  app.get("/api/songs", (req, res) => {
-    Song.find({}, "-_id -__v", function(err, songs) {
-      if (err) {
-        res.status(422).send(err);
-      } else {
-        res.send(songs);
-      }
-    });
+  app.get("/api/songs", async (req, res) => {
+    try {
+      const songs = await Song.find({}, "-_id -__v -authorId").cache({
+        key: "allsongs"
+      });
+      res.send(songs);
+    } catch (err) {
+      res.status(422).send(err);
+    }
   });
 
   app.get("/api/songs/:id", (req, res) => {
-    Song.findOne({ id: req.params.id }, "-_id -__v", function(err, song) {
+    Song.findOne({ id: req.params.id }, "-_id -__v -authorId", function(
+      err,
+      song
+    ) {
       if (err) {
         res.status(422).send(err);
       } else {
@@ -24,7 +28,7 @@ module.exports = app => {
     });
   });
 
-  app.post("/api/songs", requireLogin, async (req, res) => {
+  app.post("/api/songs", requireLogin, cleanCache, async (req, res) => {
     const { title, artist, description, youtubeUrl, authorId } = req.body;
     let imageUrl;
     if (!req.body.imageUrl) {
@@ -50,21 +54,21 @@ module.exports = app => {
     }
   });
 
-  app.patch("/api/songs/:id", requireLogin, async (req, res) => {
+  app.patch("/api/songs/:id", requireLogin, cleanCache, async (req, res) => {
     const { title, artist, description, youtubeUrl, imageUrl } = req.body;
 
     try {
       song = await Song.findOneAndUpdate(
         { id: req.params.id },
         { title, artist, description, youtubeUrl, imageUrl }
-      ).select("-_id -__v");
+      ).select("-_id -__v -authorId");
       res.send(song);
     } catch (err) {
       res.status(422).send(err);
     }
   });
 
-  app.delete("/api/songs/:id", requireLogin, (req, res) => {
+  app.delete("/api/songs/:id", requireLogin, cleanCache, (req, res) => {
     Song.findOneAndDelete({ id: req.params.id }, function(err, song) {
       if (err) {
         res.status(422).send(err);

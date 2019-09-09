@@ -11,6 +11,7 @@ const keys = require("./config/keys");
 
 require("./models/User");
 require("./models/Song");
+require("./services/cache");
 
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
