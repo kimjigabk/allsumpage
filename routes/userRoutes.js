@@ -29,7 +29,7 @@ module.exports = app => {
     }
   });
 
-  //유저 정보 수정
+  //유저 정보 수정 (+별표눌렀을때 발동)
   //returns user (user.array is not updated.)
   app.patch("/api/user", async (req, res) => {
     const user = await User.findOneAndUpdate(
