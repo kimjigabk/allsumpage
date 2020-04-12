@@ -1,16 +1,16 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { signIn, signOut } from "../actions";
-import keys from "../config/keys";
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signIn, signOut } from '../actions';
+import keys from '../config/keys';
 
 class GoogleAuth extends React.Component {
   componentDidMount() {
-    window.gapi.load("client:auth2", () => {
+    window.gapi.load('client:auth2', () => {
       window.gapi.client
         .init({
           clientId: keys.clientId,
-          scope: "email"
+          scope: 'email',
         })
         .then(() => {
           //link reference to the auth object to signIn and signOut
@@ -23,11 +23,11 @@ class GoogleAuth extends React.Component {
     });
   }
 
-  onAuthChange = isSignedIn => {
+  onAuthChange = (isSignedIn) => {
     const currentUser = this.auth.currentUser.get();
     if (isSignedIn) {
       let id = currentUser.getId();
-      let name = currentUser.w3.ig;
+      let name = currentUser.getBasicProfile().getName();
       this.props.signIn(id, name);
     } else {
       this.props.signOut();
@@ -48,27 +48,24 @@ class GoogleAuth extends React.Component {
     } else if (this.props.isSigned) {
       return (
         <div
-          className="ui simple dropdown item"
-          style={{ paddingBottom: "10px", borderRight: 0 }}
-        >
+          className='ui simple dropdown item'
+          style={{ paddingBottom: '10px', borderRight: 0 }}>
           {this.props.displayName}
-          <div className="menu transition">
+          <div className='menu transition'>
             <div
-              className="item"
-              onClick={() => this.props.history.push("/songs")}
-            >
-              <i className="play icon" />
+              className='item'
+              onClick={() => this.props.history.push('/songs')}>
+              <i className='play icon' />
               Songs
             </div>
             <div
-              className="item"
-              onClick={() => this.props.history.push("/yourpage")}
-            >
-              <i className="music icon" />
+              className='item'
+              onClick={() => this.props.history.push('/yourpage')}>
+              <i className='music icon' />
               Yours
             </div>
-            <div className="item" onClick={this.onSignOutClick}>
-              <i className="google icon" />
+            <div className='item' onClick={this.onSignOutClick}>
+              <i className='google icon' />
               Sign Out
             </div>
           </div>
@@ -76,8 +73,8 @@ class GoogleAuth extends React.Component {
       );
     } else {
       return (
-        <span onClick={this.onSignInClick} className="ui item link">
-          <i className="google icon" />
+        <span onClick={this.onSignInClick} className='ui item link'>
+          <i className='google icon' />
           Sign in with Google
         </span>
       );
@@ -87,15 +84,12 @@ class GoogleAuth extends React.Component {
     return <div>{this.renderAuthButton()}</div>;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSigned: state.auth.isSignedIn,
-    displayName: state.auth.displayName
+    displayName: state.auth.displayName,
   };
 };
 
 const menu = withRouter(GoogleAuth);
-export default connect(
-  mapStateToProps,
-  { signIn, signOut }
-)(menu);
+export default connect(mapStateToProps, { signIn, signOut })(menu);
