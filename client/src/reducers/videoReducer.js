@@ -1,8 +1,9 @@
-import { SHOW_VIDEO, CLOSE_VIDEO } from "../actions/types";
+/* eslint-disable import/no-anonymous-default-export */
+import { SHOW_VIDEO, CLOSE_VIDEO } from '../actions/types';
 
 const INITIAL_STATE = {
   isShow: false,
-  songId: null
+  songId: null,
 };
 
 export default (state = INITIAL_STATE, action) => {

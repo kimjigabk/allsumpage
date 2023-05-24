@@ -1,11 +1,12 @@
-import { SIGN_IN, SIGN_OUT, ADD_FAVORITES } from "../actions/types";
+/* eslint-disable import/no-anonymous-default-export */
+import { SIGN_IN, SIGN_OUT, ADD_FAVORITES } from '../actions/types';
 
 const INITIAL_STATE = {
   isSignedIn: null,
   userId: null,
   displayName: null,
   favoritedSongsIds: null,
-  isAdmin: false
+  isAdmin: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
