@@ -16,7 +16,7 @@ require('./services/cache');
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useFindAndModify: false,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
 const app = express();
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   // Add a handler to inspect the req.secure flag (see
   // http://expressjs.com/api#req.secure). This allows us
   // to know whether the request was via http or https.
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     if (req.secure) {
       // request was via https, so do no special handling
       next();
@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 app.get('/test', (req, res) => {
   console.log(req.secure);
-
+  console.log(process.env.NODE_ENV);
   res.send({ hi: 'there' });
 });
 
