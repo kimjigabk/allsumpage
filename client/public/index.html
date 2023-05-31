@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
 
+    <!-- Load critical css -->
     <link rel="stylesheet" href="/semantic.min.css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,22 +32,22 @@
     <div id="root"></div>
     <div id="modal"></div>
 
-    <!-- Decreases Document On Load time by 14% -->
+    <!-- Load non-critical css(rest)-->
     <script type="text/javascript">
-      const loadstyleSheet = src => {
+      const loadstyleSheet = (src) => {
         if (document.createStylesheet) {
           document.createStylesheet(src);
         } else {
-          const stylesheet = document.createElement("link");
+          const stylesheet = document.createElement('link');
           stylesheet.href = src;
-          stylesheet.type = "text/css";
-          stylesheet.rel = "stylesheet";
-          document.getElementsByTagName("head")[0].appendChild(stylesheet);
+          stylesheet.type = 'text/css';
+          stylesheet.rel = 'stylesheet';
+          document.getElementsByTagName('head')[0].appendChild(stylesheet);
         }
       };
-      window.onload = function() {
+      window.onload = function () {
         loadstyleSheet(
-          "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+          'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css'
         );
       };
     </script>
@@ -56,5 +57,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
     /> -->
     <script src="https://apis.google.com/js/api.js"></script>
+    <!-- <script src="https://accounts.google.com/gsi/client"></script>     -->
   </body>
 </html>
